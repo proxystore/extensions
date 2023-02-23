@@ -3,13 +3,17 @@ requires = ["setuptools>=64.0", "setuptools_scm"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "foobar"
+name = "proxystore-extensions"
 version = "0.1.0"
 authors = [
-    {name = "foobar author"},
-    {email = "foobar@foobar.com"},
+    {name = "Globus Labs"},
+    {name = "Greg Pauloski", email = "jgpauloski@uchicago.edu"},
 ]
-description = "Foobar example package."
+maintainers = [
+    {name = "Greg Pauloski", email = "jgpauloski@uchicago.edu"},
+    {name = "Valerie Hayot-Sasson", email = "vhayot@uchicago.edu"},
+]
+description = "ProxyStore extensions package."
 readme = "README.md"
 requires-python = ">=3.7"
 license = {text = "MIT"}
@@ -20,14 +24,13 @@ classifiers = [
     "Programming Language :: Python :: Implementation :: CPython",
 ]
 dependencies = [
-    "requests",
     "importlib-metadata; python_version<'3.8'",
 ]
 
 [project.urls]
-homepage = "https://github.com/foobar-author/foobar"
-documentation = "https://foobar.readthedocs.io"
-repository = "https://github.com/foobar-author/foobar"
+homepage = "https://github.com/proxystore/extensions"
+documentation = "https://extensions.proxystore.dev"
+repository = "https://github.com/proxystore/extensions"
 
 [project.optional-dependencies]
 dev = [
@@ -138,13 +141,14 @@ multiline-quotes = "single"
 
 [tool.ruff.isort]
 force-single-line = true
-known-first-party = ["foobar", "test", "testing"]
+known-first-party = ["proxystore_extensions", "test", "testing"]
 order-by-type = false
 required-imports = ["from __future__ import annotations"]
 
 [tool.ruff.per-file-ignores]
 "*/__init__.py" = ["F401"]
-"*/*_test.py" = ["D10"]
+"tests/*" = ["D10"]
+"testing/*" = ["D104"]
 
 [tool.ruff.pydocstyle]
 convention = "google"

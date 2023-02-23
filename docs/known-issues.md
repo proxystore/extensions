@@ -1,4 +1,3 @@
 # Known Issues
 
-- First known issue.
-- Second known issue.
+There are no known issues at this time.
