@@ -6,9 +6,7 @@ site_description: Documentation for ProxyStore Extensions.
 repo_name: proxystore/extensions
 repo_url: https://github.com/proxystore/extensions
 
-edit_uri: blob/main/docs/
-
-copyright: Copyright &copy; 2023—Present Globus Labs
+copyright: Copyright &copy; 2023—Present by <a target="_blank" href="https://gregpauloski.com">Greg Pauloski</a> and <a target="_blank" href="https://labs.globus.org">Globus Labs</a>
 
 
 theme:
@@ -71,6 +69,9 @@ extra:
     default: latest
     provider: mike
 
+extra_css:
+  - css/mkdocstrings.css
+
 markdown_extensions:
   - admonition
   - attr_list
@@ -106,11 +107,14 @@ nav:
   - Home:
       - Overview: index.md
       - Installation: installation.md
-      - Changelog: https://github.com/proxystore/extensions/releases
-  - Contributing: contributing.md
-  - API Reference:
-      - ProxyStore Extensions: reference/
       - Known Issues: known-issues.md
+      - Changelog (GitHub): https://github.com/proxystore/extensions/releases
+  - API Reference: api/
+  - Contributing:
+      - contributing/index.md
+      - Style Guide: contributing/style-guide.md
+      - Issues and Pull Requests: contributing/issues-pull-requests.md
+      - Releases: contributing/releases.md
 
 plugins:
   - gen-files:
@@ -126,6 +130,7 @@ plugins:
             - pytkdocs_tweaks.main()
           import:
             - https://docs.python.org/3/objects.inv
+            - https://docs.proxystore.dev/main/objects.inv
           options:
             docstring_section_style: list
             docstring_style: google

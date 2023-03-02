@@ -28,7 +28,7 @@ dependencies = [
 ]
 
 [project.urls]
-homepage = "https://github.com/proxystore/extensions"
+homepage = "https://proxystore.dev"
 documentation = "https://extensions.proxystore.dev"
 repository = "https://github.com/proxystore/extensions"
 

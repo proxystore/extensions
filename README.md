@@ -8,12 +8,13 @@ Extensions for the [ProxyStore package](https://github.com/proxystore/proxystore
 
 ## Installation
 
-Install via pip:
-
 ```bash
 pip install proxystore-extensions
 ```
 
+See the [Installation](https://extensions.proxystore.dev/main/installation) guide for more information about the available extra install options.
+For local development, see the [Contributing](https://extensions.proxystore.dev/main/contributing) guide.
+
 ## Documentation
 
-ProxyStore's documentation is available at https://docs.proxystore.dev and supplemental documentation for the extensions package is available at https://extensions.proxystore.dev.
+ProxyStore's documentation is available at [docs.proxystore.dev](https://docs.proxystore.dev) and supplemental documentation for the extensions package is available at [extensions.proxystore.dev](https://extensions.proxystore.dev).
