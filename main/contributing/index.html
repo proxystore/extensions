@@ -15,13 +15,13 @@
         <link rel="canonical" href="https://extensions.proxystore.dev/main/contributing/">
       
       
-        <link rel="prev" href="../installation/">
+        <link rel="prev" href="../api/">
       
       
-        <link rel="next" href="../reference/">
+        <link rel="next" href="style-guide/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.15">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.0">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.113286f1.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.402914a4.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.a0c5b2b5.min.css">
@@ -49,6 +49,8 @@
     
     
       <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../css/mkdocstrings.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -79,7 +81,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#contributing" class="md-skip">
+        <a href="#getting-started-for-local-development" class="md-skip">
           Skip to content
         </a>
       
@@ -238,6 +240,22 @@
         
   
   
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../api/" class="md-tabs__link">
+        API Reference
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
     
   
 
@@ -247,29 +265,6 @@
       Contributing
     </a>
   </li>
-
-      
-        
-  
-  
-
-
-  
-  
-  
-    
-
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../reference/" class="md-tabs__link">
-        API Reference
-      </a>
-    </li>
-  
-
-  
 
       
     </ul>
@@ -379,8 +374,22 @@
   
   
     <li class="md-nav__item">
+      <a href="../known-issues/" class="md-nav__link">
+        Known Issues
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="https://github.com/proxystore/extensions/releases" class="md-nav__link">
-        Changelog
+        Changelog (GitHub)
       </a>
     </li>
   
@@ -389,124 +398,6 @@
           
         </ul>
       </nav>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-    
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Contributing
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        Contributing
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#getting-started-for-local-development" class="md-nav__link">
-    Getting Started for Local Development
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#continuous-integration" class="md-nav__link">
-    Continuous Integration
-  </a>
-  
-    <nav class="md-nav" aria-label="Continuous Integration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#linting-and-type-checking-pre-commit" class="md-nav__link">
-    Linting and Type Checking (pre-commit)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tests-tox" class="md-nav__link">
-    Tests (tox)
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#docs" class="md-nav__link">
-    Docs
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#style-guide" class="md-nav__link">
-    Style Guide
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#issues" class="md-nav__link">
-    Issues
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pull-requests" class="md-nav__link">
-    Pull Requests
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#release-instructions" class="md-nav__link">
-    Release Instructions
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -524,48 +415,19 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
       
       
       
-        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
           API Reference
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_3">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
           API Reference
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    
-      
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-      
-      
-      
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
-      
-      
-      
-        <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
-          ProxyStore Extensions
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_3_1">
-          <span class="md-nav__icon md-icon"></span>
-          ProxyStore Extensions
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -575,7 +437,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/" class="md-nav__link">
+      <a href="../api/" class="md-nav__link">
         proxystore_extensions
       </a>
     </li>
@@ -588,6 +450,56 @@
     </li>
   
 
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+      
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index md-nav__link--active">
+          <a href="./">Contributing</a>
+          
+            <label for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Contributing
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="style-guide/" class="md-nav__link">
+        Style Guide
+      </a>
+    </li>
+  
+
             
           
             
@@ -596,8 +508,22 @@
   
   
     <li class="md-nav__item">
-      <a href="../known-issues/" class="md-nav__link">
-        Known Issues
+      <a href="issues-pull-requests/" class="md-nav__link">
+        Issues and Pull Requests
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="releases/" class="md-nav__link">
+        Releases
       </a>
     </li>
   
@@ -627,8 +553,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -677,34 +601,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#style-guide" class="md-nav__link">
-    Style Guide
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#issues" class="md-nav__link">
-    Issues
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pull-requests" class="md-nav__link">
-    Pull Requests
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#release-instructions" class="md-nav__link">
-    Release Instructions
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -723,15 +619,16 @@
   
 
 
-<h1 id="contributing">Contributing<a class="headerlink" href="#contributing" title="Permanent link">&para;</a></h1>
+  <h1>Contributing</h1>
+
 <h2 id="getting-started-for-local-development">Getting Started for Local Development<a class="headerlink" href="#getting-started-for-local-development" title="Permanent link">&para;</a></h2>
-<p>We recommend using <a href="https://tox.wiki/en/latest/index.html">Tox</a> to setup the
-development environment. This will create a new virtual environment with all
-of the required packages installed and the <code>proxystore-extensions</code> package
-installed in editable mode.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/proxystore/extensions.git
+<p>We recommend using <a href="https://tox.wiki/en/latest/index.html" target="_blank">Tox</a>
+to setup the development environment. This will create a new virtual
+environment with all of the required packages installed
+and ProxyStore installed in editable mode with the necessary extras options.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/proxystore/extensions
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>extensions
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>$<span class="w"> </span>tox<span class="w"> </span>--devenv<span class="w"> </span>venv<span class="w"> </span>-e<span class="w"> </span>py39
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>$<span class="w"> </span>tox<span class="w"> </span>--devenv<span class="w"> </span>venv<span class="w"> </span>-e<span class="w"> </span>py310
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>$<span class="w"> </span>.<span class="w"> </span>venv/bin/activate
 </span></code></pre></div>
 <div class="admonition warning">
@@ -741,140 +638,53 @@ Tox's ability to find the correct Python versions. E.g., if your
 Conda environment is Python 3.9, running <code class="language-bash highlight">$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>p38</code> may still use
 Python 3.9.</p>
 </div>
+<p>To install manually:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/proxystore/extensions
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>extensions
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>$<span class="w"> </span>.<span class="w"> </span>venv/bin/activate
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span>dev,docs<span class="o">]</span>
+</span></code></pre></div></p>
 <h2 id="continuous-integration">Continuous Integration<a class="headerlink" href="#continuous-integration" title="Permanent link">&para;</a></h2>
-<p>ProxyStore uses <a href="https://pre-commit.com/">pre-commit</a> and
-<a href="https://tox.wiki/en/latest/index.html">Tox</a> for continuous integration
+<p>ProxyStore uses <a href="https://pre-commit.com/" target="_blank">pre-commit</a> and
+<a href="https://tox.wiki/en/latest/index.html" target="_blank">Tox</a> for continuous integration
 (test, linting, etc.).</p>
 <h3 id="linting-and-type-checking-pre-commit">Linting and Type Checking (pre-commit)<a class="headerlink" href="#linting-and-type-checking-pre-commit" title="Permanent link">&para;</a></h3>
 <p>To use pre-commit, install the hook and then run against files.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$<span class="w"> </span>pre-commit<span class="w"> </span>install
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>$<span class="w"> </span>pre-commit<span class="w"> </span>run<span class="w"> </span>--all-files
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$<span class="w"> </span>pre-commit<span class="w"> </span>install
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>$<span class="w"> </span>pre-commit<span class="w"> </span>run<span class="w"> </span>--all-files
 </span></code></pre></div>
 <h3 id="tests-tox">Tests (tox)<a class="headerlink" href="#tests-tox" title="Permanent link">&para;</a></h3>
 <p>The entire CI workflow can be run with <code class="language-bash highlight">$<span class="w"> </span>tox</code>.
 This will test against multiple versions of Python and can be slow.</p>
 <p>Module-level unit-test are located in the <code>tests/</code> directory and its
 structure is intended to match that of <code>proxystore_extensions/</code>.
-E.g. the tests for <code>proxystore_extensions/modA/modB.py</code> are located in
-<code>tests/modA/modB.py</code>; however, additional test files can be added
+E.g. the tests for <code>proxystore_extenions/x/y.py</code> are located in
+<code>tests/x/y_test.py</code>; however, additional test files can be added
 as needed. Tests should be narrowly focused and target a single aspect of the
 code's functionality, tests should not test internal implementation details of
 the code, and tests should not be dependent on the order in which they are run.</p>
 <p>Code that is useful for building tests but is not a test itself belongs in the
 <code>testing/</code> directory.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Run all tests in tests/</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>py39
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># Run a specific test</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>py39<span class="w"> </span>--<span class="w"> </span>tests/modA.py::test_function_name
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Run all tests in tests/</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>py39
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># Run a specific test</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>py39<span class="w"> </span>--<span class="w"> </span>tests/x/y_test.py::test_z
 </span></code></pre></div>
 <h2 id="docs">Docs<a class="headerlink" href="#docs" title="Permanent link">&para;</a></h2>
 <p>If code changes require an update to the documentation (e.g., for function
 signature changes, new modules, etc.), the documentation can be built using
 MKDocs.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Manually</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span>docs<span class="o">]</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>$<span class="w"> </span>mkdocs<span class="w"> </span>build<span class="w"> </span>--strict<span class="w">  </span><span class="c1"># Build only to site/index.html</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>$<span class="w"> </span>mkdocs<span class="w"> </span>server<span class="w">          </span><span class="c1"># Serve locally</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c1"># With tox</span>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>docs
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Manually</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span>docs<span class="o">]</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>$<span class="w"> </span>mkdocs<span class="w"> </span>build<span class="w"> </span>--strict<span class="w">  </span><span class="c1"># Build only to site/index.html</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>$<span class="w"> </span>mkdocs<span class="w"> </span>serve<span class="w">           </span><span class="c1"># Serve locally</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1"># With tox (will only build, does not serve)</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>docs
 </span></code></pre></div>
 <p>Docstrings are automatically generated, but it is recommended to check the
 generated docstrings to make sure details/links/etc. are correct.</p>
-<h2 id="style-guide">Style Guide<a class="headerlink" href="#style-guide" title="Permanent link">&para;</a></h2>
-<p>The Python code and docstring format mostly follows Google's
-<a href="https://google.github.io/styleguide/pyguide.html">Python Style Guide</a>,
-but the pre-commit config is the authoritative source for code format
-compliance.</p>
-<p><strong>Nits:</strong></p>
-<ul>
-<li>Avoid imports in <code>__init__.py</code> (reduces the likelihood of circular imports).</li>
-<li>Prefer pure functions where possible.</li>
-<li>Define all class attributes inside <code>__init__</code> so all attributes are visible
-  in one place. Attributes that are defined later can be set as <code>None</code>
-  as a placeholder.</li>
-<li>Prefer f-strings (<code class="language-python highlight"><span class="sa">f</span><span class="s1">&#39;name: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span></code>) over string format
-  (<code class="language-python highlight"><span class="s1">&#39;name: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></code>). Never use the <code>%</code> operator.</li>
-<li>Prefer <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/typing.html#typing.NamedTuple">typing.NamedTuple</a> over <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/collections.html#collections.namedtuple">collections.namedtuple</a>.</li>
-<li>Use lower-case and no punctuation for log messages, but use upper-case and
-  punctuation for exception values.
-  <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;new connection opened to </span><span class="si">{</span><span class="n">address</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Name must contain alphanumeric characters only.&#39;</span><span class="p">)</span>
-</span></code></pre></div></li>
-<li>Document all exceptions that may be raised by a function in the docstring.</li>
-</ul>
-<h2 id="issues">Issues<a class="headerlink" href="#issues" title="Permanent link">&para;</a></h2>
-<p>We use GitHub issues to report problems, request and track changes, and discuss
-future ideas.
-If you open an issue for a specific problem, please follow the template guides.</p>
-<h2 id="pull-requests">Pull Requests<a class="headerlink" href="#pull-requests" title="Permanent link">&para;</a></h2>
-<p>We use the standard GitHub contribution cycle where all contributions are
-made via pull requests (including code owners!).</p>
-<ol>
-<li>Fork the repository and clone to your local machine.</li>
-<li>Create local changes.<ul>
-<li>Changes should conform to the style and testing guidelines, referenced
-  above.</li>
-<li>Preferred commit message format (<a href="https://cbea.ms/git-commit/">source</a>):<ul>
-<li>separate subject from body with a blank line,</li>
-<li>limit subject line to 50 characters,</li>
-<li>capitalize first word of subject line,</li>
-<li>do not end the subject line with a period,</li>
-<li>use the imperative mood for subject lines,</li>
-<li>include related issue numbers at end of subject line,</li>
-<li>wrap body at 72 characters, and</li>
-<li>use the body to explain what/why rather than how.
-  Example: <code>Fix concurrency bug in Store (#42)</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Push commits to your fork.<ul>
-<li>Please squash commits fixing mistakes to keep the git history clean.
-  For example, if commit "b" follows commit "a" and only fixes a small typo
-  from "a", please squash "a" and "b" into a single, correct commit.
-  This keeps the commit history readable and easier to search through when
-  debugging (e.g., git blame/bisect).</li>
-</ul>
-</li>
-<li>Open a pull request in this repository.<ul>
-<li>The pull request should include a description of the motivation for the
-  PR and included changes. A PR template is provided to guide this process.</li>
-</ul>
-</li>
-</ol>
-<h2 id="release-instructions">Release Instructions<a class="headerlink" href="#release-instructions" title="Permanent link">&para;</a></h2>
-<ol>
-<li>Choose the next version number, referred to as <code>{VERSION}</code> for the
-   rest of the instructions. ProxyStore versioning follows semver
-   (<code>major.minor.patch</code>) with optional <a href="https://peps.python.org/pep-0440">PEP-440</a>
-   pre-release/post-release/dev-release segments. Major/minor/patch numbers
-   start at 0 and pre-release/post-release/dev-release segments start at 1.</li>
-<li>Update the version in <code>pyproject.toml</code> to <code>{VERSION}</code>.</li>
-<li>Commit and merge the version updates/changelogs into main.</li>
-<li>Tag the release commit and push (typically this is the commit updating the
-   version numbers).
-   <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$<span class="w"> </span>git<span class="w"> </span>tag<span class="w"> </span>-s<span class="w"> </span>v<span class="o">{</span>VERSION<span class="o">}</span><span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;ProxyStore Extensions v{VERSION}&quot;</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>$<span class="w"> </span>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>v<span class="o">{</span>VERSION<span class="o">}</span>
-</span></code></pre></div>
-   Note the version number is prepended by "v" for the tags so we can
-   distinguish release tags from non-release tags.</li>
-<li>Create a new release on GitHub using the tag. The title should be
-   <code>ProxyStore Extensions v{VERSION}</code>.</li>
-<li><strong>Official release:</strong><ol>
-<li>Use the "Generate release notes" option and set the previous tag as the previous official release tag. E.g., for <code>v0.4.1</code>, the previous release tag should be <code>v0.4.0</code> and NOT <code>v0.4.1a1</code>.</li>
-<li>Add an "Upgrade Steps" section at the top (see previous releases for examples).</li>
-<li>Review the generated notes and edit as needed. PRs are organized by tag, but some PRs will be missing tags and need to be moved from the "Other Changes" section to the correct section.</li>
-<li>Select "Set as the latest release."</li>
-</ol>
-</li>
-<li><strong>Unnofficial release:</strong> (alpha/dev builds)<ol>
-<li>Do NOT generate release notes. The body can be along the lines of "Development pre-prelease for <code>V{VERSION}</code>."</li>
-<li>Leave the previous tag as "auto."</li>
-<li>Select "Set as a pre-release."</li>
-</ol>
-</li>
-</ol>
 
 
 
@@ -901,7 +711,7 @@ made via pull requests (including code owners!).</p>
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; 2023—Present Globus Labs
+      Copyright &copy; 2023—Present by <a target="_blank" href="https://gregpauloski.com">Greg Pauloski</a> and <a target="_blank" href="https://labs.globus.org">Globus Labs</a>
     </div>
   
   
@@ -924,7 +734,7 @@ made via pull requests (including code owners!).</p>
     <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate", "content.code.copy", "navigation.path", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.2a6f1dda.min.js"></script>
+      <script src="../assets/javascripts/bundle.ce72ebac.min.js"></script>
       
     
   </body>
