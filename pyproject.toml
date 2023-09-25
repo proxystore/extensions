@@ -3,7 +3,7 @@ requires = ["setuptools>=64.0", "setuptools_scm"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "proxystore-extensions"
+name = "proxystore-ex"
 version = "0.1.0"
 authors = [
     {name = "Globus Labs"},
@@ -13,7 +13,7 @@ maintainers = [
     {name = "Greg Pauloski", email = "jgpauloski@uchicago.edu"},
     {name = "Valerie Hayot-Sasson", email = "vhayot@uchicago.edu"},
 ]
-description = "ProxyStore extensions package."
+description = "ProxyStore extensions."
 readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
@@ -23,7 +23,9 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: Implementation :: CPython",
 ]
-dependencies = []
+dependencies = [
+    "proxystore>=0.5.0",
+]
 
 [project.urls]
 homepage = "https://proxystore.dev"
@@ -38,7 +40,9 @@ dev = [
     "mypy",
     "pre-commit",
     "pytest",
+    "pytest-asyncio",
     "pytest-cov",
+    "pytest-timeout",
     "ruff",
     "tox",
     "virtualenv",
@@ -47,7 +51,8 @@ docs = [
     "black",
     "mkdocs-gen-files",
     "mkdocs-literate-nav",
-    "mkdocs-material",
+    # mkdocs-material 9.4.0 makes mkdocs-section-index break
+    "mkdocs-material!=9.4.0",
     "mkdocs-section-index",
     "mkdocstrings[python]",
     "mike",
@@ -70,7 +75,9 @@ dist,
 
 [tool.coverage.run]
 plugins = ["covdefaults"]
+concurrency = ["multiprocessing", "thread"]
 omit = ["examples"]
+parallel = true
 
 [tool.mypy]
 python_version = "3.10"
@@ -92,6 +99,10 @@ allow_untyped_defs = true
 module = "tests.*"
 allow_incomplete_defs = true
 allow_untyped_defs = true
+
+[tool.pytest]
+asyncio_mode = "auto"
+timeout = 30
 
 [tool.ruff]
 # See all rules here: https://beta.ruff.rs/docs/rules
@@ -124,10 +135,26 @@ select = [
     "Q",
     # flake8-debugger
     "T10",
+    # PyLint
+    "PLE", "PLW",
     # ruff-specific
     "RUF",
 ]
-extend-ignore = []
+extend-ignore = [
+    # Do not require docstrings for magic methods
+    "D105",
+    # Do not require docstrings for __init__ methods
+    "D107",
+    # Allow builtin attribute shadowing
+    "A003",
+    # Ruff will change all([generator]) to all(generator) because the all/any
+    # generator expressions directly and the list comprehension is not needed.
+    # However, coverage marks unfinished generators as not covered and
+    # all/any can early exit before exhausting the generator.
+    "C419",
+    # Allow pytest.raises() without match
+    "PT011",
+]
 target-version = "py38"
 
 [tool.ruff.flake8-pytest-style]
@@ -135,11 +162,10 @@ parametrize-values-type = "tuple"
 
 [tool.ruff.flake8-quotes]
 inline-quotes = "single"
-multiline-quotes = "single"
 
 [tool.ruff.isort]
 force-single-line = true
-known-first-party = ["proxystore_extensions", "test", "testing"]
+known-first-party = ["proxystore_ex", "test", "testing"]
 order-by-type = false
 required-imports = ["from __future__ import annotations"]
 

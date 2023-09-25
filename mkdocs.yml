@@ -61,7 +61,7 @@ watch:
   - mkdocs.yml
   - README.md
   - docs/
-  - proxystore_extensions/
+  - proxystore_ex/
 
 extra:
   version:

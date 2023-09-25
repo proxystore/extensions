@@ -9,7 +9,7 @@ Extensions for the [ProxyStore package](https://github.com/proxystore/proxystore
 ## Installation
 
 ```bash
-pip install proxystore-extensions
+pip install proxystore-ex
 ```
 
 See the [Installation](https://extensions.proxystore.dev/main/installation) guide for more information about the available extra install options.
