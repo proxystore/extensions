@@ -22,6 +22,11 @@ except ImportError:
 
     sys.modules['ucp'] = ucp
 
+from testing.connectors import connectors
+from testing.connectors import margo_connector
+from testing.connectors import ucx_connector
+from testing.connectors import zmq_connector
+
 
 @pytest.fixture(scope='session')
 def event_loop() -> Generator[asyncio.AbstractEventLoop, None, None]:
