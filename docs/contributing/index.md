@@ -66,6 +66,24 @@ $ tox -e py39
 $ tox -e py39 -- tests/x/y_test.py::test_z
 ```
 
+### Tests (docker)
+
+The test suite mocks certain third-party programs that cannot be installed via
+pip (e.g., Margo, UCX, Redis). For Margo and UCX, a Docker image is provided
+at
+[proxystore/images](https://github.com/proxystore/images){target=_blank}
+with the software pre-built and Python installed. The tox environments
+`py{version}-dim` can be run in the container to validate changes against
+the un-mocked software.
+
+```bash
+$ docker pull ghcr.io/proxystore/proxystore-dim:nightly
+# Be sure to change the path to your proxystore repo directory
+$ docker run --rm -it --network host -v /path/to/proxystore:/proxystore ghcr.io/proxystore/proxystore-dim:nightly
+# Inside container
+$ tox -e py310-dim
+```
+
 ## Docs
 
 If code changes require an update to the documentation (e.g., for function
