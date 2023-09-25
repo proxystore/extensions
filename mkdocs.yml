@@ -109,7 +109,8 @@ nav:
       - Installation: installation.md
       - Known Issues: known-issues.md
       - Changelog (GitHub): https://github.com/proxystore/extensions/releases
-  - API Reference: api/
+  - API Reference:
+      - ProxyStore Extensions: api/
   - Contributing:
       - contributing/index.md
       - Style Guide: contributing/style-guide.md
