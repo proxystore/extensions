@@ -16,7 +16,52 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://extensions.proxystore.dev/main/api/</loc>
+         <lastmod>2023-09-25</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://extensions.proxystore.dev/main/api/SUMMARY/</loc>
+         <lastmod>2023-09-25</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://extensions.proxystore.dev/main/api/connectors/</loc>
+         <lastmod>2023-09-25</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://extensions.proxystore.dev/main/api/connectors/dim/</loc>
+         <lastmod>2023-09-25</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://extensions.proxystore.dev/main/api/connectors/dim/exceptions/</loc>
+         <lastmod>2023-09-25</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://extensions.proxystore.dev/main/api/connectors/dim/margo/</loc>
+         <lastmod>2023-09-25</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://extensions.proxystore.dev/main/api/connectors/dim/models/</loc>
+         <lastmod>2023-09-25</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://extensions.proxystore.dev/main/api/connectors/dim/ucx/</loc>
+         <lastmod>2023-09-25</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://extensions.proxystore.dev/main/api/connectors/dim/utils/</loc>
+         <lastmod>2023-09-25</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://extensions.proxystore.dev/main/api/connectors/dim/zmq/</loc>
          <lastmod>2023-09-25</lastmod>
          <changefreq>daily</changefreq>
     </url>

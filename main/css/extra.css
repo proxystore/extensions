@@ -12,6 +12,7 @@
   --md-primary-fg-color: #7785AC;
   --md-accent-fg-color: #D16666;
   --md-accent-bg-color: #D16666;
+  --md-code-hl-color: #EBE0F5;
 }
 
 [data-md-color-primary="proxystore-light"] {

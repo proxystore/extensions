@@ -12,26 +12,28 @@
         <meta name="author" content="Globus Labs">
       
       
-        <link rel="canonical" href="https://extensions.proxystore.dev/main/">
+        <link rel="canonical" href="https://extensions.proxystore.dev/main/api/connectors/dim/utils/">
       
       
+        <link rel="prev" href="../ucx/">
       
-        <link rel="next" href="installation/">
+      
+        <link rel="next" href="../zmq/">
       
       
-      <link rel="icon" href="static/favicon.png">
+      <link rel="icon" href="../../../../static/favicon.png">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.2">
     
     
       
-        <title>Overview - ProxyStore Extensions</title>
+        <title>utils - ProxyStore Extensions</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.d451bc0e.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.d451bc0e.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.a5377069.min.css">
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.a5377069.min.css">
       
       
 
@@ -50,13 +52,13 @@
       
     
     
-      <link rel="stylesheet" href="assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../../../assets/_mkdocstrings.css">
     
-      <link rel="stylesheet" href="css/extra.css">
+      <link rel="stylesheet" href="../../../../css/extra.css">
     
-      <link rel="stylesheet" href="css/mkdocstrings.css">
+      <link rel="stylesheet" href="../../../../css/mkdocstrings.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -85,7 +87,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#proxystore-extensions" class="md-skip">
+        <a href="#proxystore_exconnectorsdimutils" class="md-skip">
           Skip to content
         </a>
       
@@ -103,9 +105,9 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="ProxyStore Extensions" class="md-header__button md-logo" aria-label="ProxyStore Extensions" data-md-component="logo">
+    <a href="../../../.." title="ProxyStore Extensions" class="md-header__button md-logo" aria-label="ProxyStore Extensions" data-md-component="logo">
       
-  <img src="static/icon.png" alt="logo">
+  <img src="../../../../static/icon.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -122,7 +124,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Overview
+              utils
             
           </span>
         </div>
@@ -241,13 +243,11 @@
         
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="." class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../../.." class="md-tabs__link">
           
   
   Home
@@ -261,17 +261,21 @@
         
   
   
+    
+  
   
     
     
       
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="api/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../" class="md-tabs__link">
           
   
   API Reference
@@ -290,7 +294,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="contributing/" class="md-tabs__link">
+      <a href="../../../../contributing/" class="md-tabs__link">
         
   
     
@@ -324,9 +328,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="ProxyStore Extensions" class="md-nav__button md-logo" aria-label="ProxyStore Extensions" data-md-component="logo">
+    <a href="../../../.." title="ProxyStore Extensions" class="md-nav__button md-logo" aria-label="ProxyStore Extensions" data-md-component="logo">
       
-  <img src="static/icon.png" alt="logo">
+  <img src="../../../../static/icon.png" alt="logo">
 
     </a>
     ProxyStore Extensions
@@ -350,8 +354,6 @@
       
   
   
-    
-  
   
     
     
@@ -361,12 +363,12 @@
       
       
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
         
           
           <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
@@ -380,7 +382,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_1">
             <span class="md-nav__icon md-icon"></span>
             Home
@@ -391,29 +393,9 @@
                 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Overview
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -422,40 +404,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    Installation
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
-    Documentation
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -467,7 +415,7 @@
   
   
     <li class="md-nav__item">
-      <a href="installation/" class="md-nav__link">
+      <a href="../../../../installation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -487,7 +435,7 @@
   
   
     <li class="md-nav__item">
-      <a href="known-issues/" class="md-nav__link">
+      <a href="../../../../known-issues/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -532,6 +480,8 @@
       
   
   
+    
+  
   
     
     
@@ -541,12 +491,12 @@
       
       
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
@@ -560,7 +510,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             API Reference
@@ -571,6 +521,8 @@
                 
   
   
+    
+  
   
     
     
@@ -580,12 +532,12 @@
       
       
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
         
           
           <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="">
@@ -599,7 +551,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2_1">
             <span class="md-nav__icon md-icon"></span>
             ProxyStore Extensions
@@ -612,7 +564,7 @@
   
   
     <li class="md-nav__item">
-      <a href="api/" class="md-nav__link">
+      <a href="../../../" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -630,23 +582,25 @@
                 
   
   
+    
+  
   
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_2" checked>
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="api/connectors/" class="md-nav__link ">
+            <a href="../../" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -663,7 +617,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2_1_2">
             <span class="md-nav__icon md-icon"></span>
             proxystore_ex.connectors
@@ -674,23 +628,25 @@
                 
   
   
+    
+  
   
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_2_1" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_2_1" checked>
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="api/connectors/dim/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -707,7 +663,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_1_2_1_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_1_2_1_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2_1_2_1">
             <span class="md-nav__icon md-icon"></span>
             dim
@@ -720,7 +676,7 @@
   
   
     <li class="md-nav__item">
-      <a href="api/connectors/dim/exceptions/" class="md-nav__link">
+      <a href="../exceptions/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -740,7 +696,7 @@
   
   
     <li class="md-nav__item">
-      <a href="api/connectors/dim/margo/" class="md-nav__link">
+      <a href="../margo/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -760,7 +716,7 @@
   
   
     <li class="md-nav__item">
-      <a href="api/connectors/dim/models/" class="md-nav__link">
+      <a href="../models/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -780,7 +736,7 @@
   
   
     <li class="md-nav__item">
-      <a href="api/connectors/dim/ucx/" class="md-nav__link">
+      <a href="../ucx/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -798,9 +754,29 @@
                 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="api/connectors/dim/utils/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    utils
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -809,6 +785,40 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#proxystore_ex.connectors.dim.utils" class="md-nav__link">
+    proxystore_ex.connectors.dim.utils
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proxystore_ex.connectors.dim.utils.get_ip_address" class="md-nav__link">
+    get_ip_address()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -820,7 +830,7 @@
   
   
     <li class="md-nav__item">
-      <a href="api/connectors/dim/zmq/" class="md-nav__link">
+      <a href="../zmq/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -888,7 +898,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="contributing/" class="md-nav__link ">
+            <a href="../../../../contributing/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -918,7 +928,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contributing/style-guide/" class="md-nav__link">
+      <a href="../../../../contributing/style-guide/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -938,7 +948,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contributing/issues-pull-requests/" class="md-nav__link">
+      <a href="../../../../contributing/issues-pull-requests/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -958,7 +968,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contributing/releases/" class="md-nav__link">
+      <a href="../../../../contributing/releases/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1006,15 +1016,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    Installation
+  <a href="#proxystore_ex.connectors.dim.utils" class="md-nav__link">
+    proxystore_ex.connectors.dim.utils
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
-    Documentation
+  <a href="#proxystore_ex.connectors.dim.utils.get_ip_address" class="md-nav__link">
+    get_ip_address()
   </a>
   
 </li>
@@ -1037,18 +1047,140 @@
   
 
 
-<h1 id="proxystore-extensions">ProxyStore Extensions<a class="headerlink" href="#proxystore-extensions" title="Permanent link">&para;</a></h1>
-<p><a href="https://github.com/proxystore/extensions/actions"><img alt="docs" src="https://github.com/proxystore/extensions/actions/workflows/docs.yml/badge.svg" /></a>
-<a href="https://github.com/proxystore/extensions/actions"><img alt="tests" src="https://github.com/proxystore/extensions/actions/workflows/tests.yml/badge.svg" /></a>
-<a href="https://results.pre-commit.ci/latest/github/proxystore/extensions/main"><img alt="pre-commit.ci status" src="https://results.pre-commit.ci/badge/github/proxystore/extensions/main.svg" /></a></p>
-<p>Extensions for the <a href="https://github.com/proxystore/proxystore/">ProxyStore package</a>.</p>
-<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>proxystore-ex
+<h1 id="proxystore_exconnectorsdimutils">proxystore_ex.connectors.dim.utils<a class="headerlink" href="#proxystore_exconnectorsdimutils" title="Permanent link">&para;</a></h1>
+
+
+<div class="doc doc-object doc-module">
+
+
+<a id="proxystore_ex.connectors.dim.utils"></a>
+  <div class="doc doc-contents">
+      <a target="_blank" href="https://github.com/proxystore/proxystore/blob/main/proxystore_ex/connectors/dim/utils.py"><code>proxystore_ex/connectors/dim/utils.py</code></a>
+  </div>
+
+  <div class="doc doc-contents first">
+  
+      <p>Shared functions used by DIM stores.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="proxystore_ex.connectors.dim.utils.get_ip_address" class="doc doc-heading">
+        <span class="doc doc-object-name doc-function-name">get_ip_address()</span>
+
+
+<a href="#proxystore_ex.connectors.dim.utils.get_ip_address" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">get_ip_address</span><span class="p">(</span><span class="n">ifname</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
 </span></code></pre></div>
-<p>See the <a href="https://extensions.proxystore.dev/main/installation">Installation</a> guide for more information about the available extra install options.
-For local development, see the <a href="https://extensions.proxystore.dev/main/contributing">Contributing</a> guide.</p>
-<h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
-<p>ProxyStore's documentation is available at <a href="https://docs.proxystore.dev">docs.proxystore.dev</a> and supplemental documentation for the extensions package is available at <a href="https://extensions.proxystore.dev">extensions.proxystore.dev</a>.</p>
+
+  <div class="doc doc-contents ">
+  
+      <p>Get ip address provided an interface name.</p>
+
+<details class="warning" open>
+  <summary>Warning</summary>
+  <p>This function does not work on MacOS/Darwin.</p>
+</details>
+
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b><code>ifname</code></b>
+            (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>)
+        –
+        <div class="doc-md-description">
+          <p>The interface name.</p>
+        </div>
+      </li>
+  </ul>
+
+
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+            <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+        –
+        <div class="doc-md-description">
+          <p>The IP address.</p>
+      </div>
+      </li>
+  </ul>
+
+      <details class="quote">
+        <summary>Source code in <code>proxystore_ex/connectors/dim/utils.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="k">def</span> <span class="nf">get_ip_address</span><span class="p">(</span><span class="n">ifname</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>  <span class="c1"># pragma: darwin no cover</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Get ip address provided an interface name.</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11"></a>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="sd">    Warning:</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="sd">        This function does not work on MacOS/Darwin.</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14"></a>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="sd">    Args:</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="sd">        ifname: The interface name.</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17"></a>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="sd">    Returns:</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="sd">        The IP address.</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21"></a>    <span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22"></a>    <span class="k">return</span> <span class="n">socket</span><span class="o">.</span><span class="n">inet_ntoa</span><span class="p">(</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23"></a>        <span class="n">fcntl</span><span class="o">.</span><span class="n">ioctl</span><span class="p">(</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24"></a>            <span class="n">s</span><span class="o">.</span><span class="n">fileno</span><span class="p">(),</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25"></a>            <span class="mh">0x8915</span><span class="p">,</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26"></a>            <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27"></a>                <span class="s1">&#39;256s&#39;</span><span class="p">,</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28"></a>                <span class="nb">bytes</span><span class="p">(</span><span class="n">ifname</span><span class="p">[:</span><span class="mi">15</span><span class="p">],</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">),</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29"></a>            <span class="p">),</span>  <span class="c1"># SIOCGIFADDR</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30"></a>        <span class="p">)[</span><span class="mi">20</span><span class="p">:</span><span class="mi">24</span><span class="p">],</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31"></a>    <span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
 
 
 
@@ -1096,10 +1228,10 @@ For local development, see the <a href="https://extensions.proxystore.dev/main/c
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": ".", "features": ["content.code.annotate", "content.code.copy", "navigation.path", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["content.code.annotate", "content.code.copy", "navigation.path", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="assets/javascripts/bundle.726fbb30.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.726fbb30.min.js"></script>
       
     
   </body>
