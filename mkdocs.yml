@@ -109,6 +109,9 @@ nav:
       - Installation: installation.md
       - Known Issues: known-issues.md
       - Changelog (GitHub): https://github.com/proxystore/extensions/releases
+  - Guides:
+      - guides/index.md
+      - DAOS at ALCF: guides/daos.md
   - API Reference:
       - ProxyStore Extensions: api/
   - Contributing:

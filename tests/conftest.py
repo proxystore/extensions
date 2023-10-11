@@ -7,6 +7,13 @@ from typing import Generator
 import pytest
 
 try:
+    import pydaos
+except ImportError:
+    from testing.mocked import pydaos
+
+    sys.modules['pydaos'] = pydaos
+
+try:
     import pymargo
 except ImportError:
     from testing.mocked import pymargo
@@ -23,6 +30,7 @@ except ImportError:
     sys.modules['ucp'] = ucp
 
 from testing.connectors import connectors
+from testing.connectors import daos_connector
 from testing.connectors import margo_connector
 from testing.connectors import ucx_connector
 from testing.connectors import zmq_connector

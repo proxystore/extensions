@@ -77,7 +77,10 @@ dist,
 [tool.coverage.run]
 plugins = ["covdefaults"]
 concurrency = ["multiprocessing", "thread"]
-omit = ["examples"]
+omit = [
+    "examples",
+    "testing/mocked/pydaos.py",
+]
 parallel = true
 
 [tool.mypy]

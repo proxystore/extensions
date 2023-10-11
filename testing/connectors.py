@@ -17,17 +17,39 @@ except ImportError:  # pragma: no cover
     # This import changed in ProxyStore v0.6.1
     from proxystore.connectors.protocols import Connector
 
+from proxystore_ex.connectors.daos import DAOSConnector
 from proxystore_ex.connectors.dim import margo
 from proxystore_ex.connectors.dim import ucx
 from proxystore_ex.connectors.dim import zmq
+from testing.mocked.pydaos import DCont as MockDCont
+from testing.mocked.pydaos import DDict as MockDDict
 from testing.mocking import mock_multiprocessing
 from testing.utils import open_port
 
 FIXTURE_LIST = [
+    'daos_connector',
     'margo_connector',
     'ucx_connector',
     'zmq_connector',
 ]
+
+
+@pytest.fixture(scope='session')
+def daos_connector() -> Generator[Connector[Any], None, None]:
+    """Mocked DAOS connector fixture."""
+    with mock.patch('pydaos.DCont', MockDCont), mock.patch(
+        'pydaos.DDict',
+        MockDDict,
+    ):
+        connector = DAOSConnector(
+            pool='test-pool',
+            container='test-container',
+            namespace='test-namespace',
+        )
+
+    yield connector
+
+    connector.close()
 
 
 @pytest.fixture(scope='session')
