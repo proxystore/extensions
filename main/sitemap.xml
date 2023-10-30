@@ -2,87 +2,87 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://extensions.proxystore.dev/main/</loc>
-         <lastmod>2023-10-23</lastmod>
+         <lastmod>2023-10-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/main/installation/</loc>
-         <lastmod>2023-10-23</lastmod>
+         <lastmod>2023-10-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/main/known-issues/</loc>
-         <lastmod>2023-10-23</lastmod>
+         <lastmod>2023-10-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/main/api/</loc>
-         <lastmod>2023-10-23</lastmod>
+         <lastmod>2023-10-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/main/api/SUMMARY/</loc>
-         <lastmod>2023-10-23</lastmod>
+         <lastmod>2023-10-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/main/api/connectors/</loc>
-         <lastmod>2023-10-23</lastmod>
+         <lastmod>2023-10-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/main/api/connectors/dim/</loc>
-         <lastmod>2023-10-23</lastmod>
+         <lastmod>2023-10-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/main/api/connectors/dim/exceptions/</loc>
-         <lastmod>2023-10-23</lastmod>
+         <lastmod>2023-10-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/main/api/connectors/dim/margo/</loc>
-         <lastmod>2023-10-23</lastmod>
+         <lastmod>2023-10-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/main/api/connectors/dim/models/</loc>
-         <lastmod>2023-10-23</lastmod>
+         <lastmod>2023-10-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/main/api/connectors/dim/ucx/</loc>
-         <lastmod>2023-10-23</lastmod>
+         <lastmod>2023-10-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/main/api/connectors/dim/utils/</loc>
-         <lastmod>2023-10-23</lastmod>
+         <lastmod>2023-10-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/main/api/connectors/dim/zmq/</loc>
-         <lastmod>2023-10-23</lastmod>
+         <lastmod>2023-10-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/main/contributing/</loc>
-         <lastmod>2023-10-23</lastmod>
+         <lastmod>2023-10-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/main/contributing/issues-pull-requests/</loc>
-         <lastmod>2023-10-23</lastmod>
+         <lastmod>2023-10-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/main/contributing/releases/</loc>
-         <lastmod>2023-10-23</lastmod>
+         <lastmod>2023-10-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/main/contributing/style-guide/</loc>
-         <lastmod>2023-10-23</lastmod>
+         <lastmod>2023-10-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
