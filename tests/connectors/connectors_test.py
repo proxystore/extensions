@@ -2,7 +2,11 @@ from __future__ import annotations
 
 from typing import Any
 
-from proxystore.connectors.connector import Connector
+try:
+    from proxystore.connectors.connector import Connector
+except ImportError:  # pragma: no cover
+    # This import changed in ProxyStore v0.6.1
+    from proxystore.connectors.protocols import Connector
 
 
 def test_connector_repr(connectors: Connector[Any]) -> None:
