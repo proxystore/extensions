@@ -10,7 +10,12 @@ from typing import Generator
 from unittest import mock
 
 import pytest
-from proxystore.connectors.connector import Connector
+
+try:
+    from proxystore.connectors.connector import Connector
+except ImportError:  # pragma: no cover
+    # This import changed in ProxyStore v0.6.1
+    from proxystore.connectors.protocols import Connector
 
 from proxystore_ex.connectors.dim import margo
 from proxystore_ex.connectors.dim import ucx
