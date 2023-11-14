@@ -12,13 +12,13 @@
         <meta name="author" content="Globus Labs">
       
       
-        <link rel="canonical" href="https://extensions.proxystore.dev/main/api/connectors/">
+        <link rel="canonical" href="https://extensions.proxystore.dev/main/guides/daos/">
       
       
         <link rel="prev" href="../">
       
       
-        <link rel="next" href="daos/">
+        <link rel="next" href="../../api/">
       
       
       <link rel="icon" href="../../static/favicon.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>proxystore_ex.connectors - ProxyStore Extensions</title>
+        <title>DAOS at ALCF - ProxyStore Extensions</title>
       
     
     
@@ -87,7 +87,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#proxystore_exconnectors" class="md-skip">
+        <a href="#daos-at-alcf" class="md-skip">
           Skip to content
         </a>
       
@@ -124,7 +124,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              proxystore_ex.connectors
+              DAOS at ALCF
             
           </span>
         </div>
@@ -261,9 +261,11 @@
         
   
   
+    
   
-    <li class="md-tabs__item">
-      <a href="../../guides/" class="md-tabs__link">
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="../" class="md-tabs__link">
         
   
     
@@ -278,21 +280,17 @@
         
   
   
-    
-  
   
     
     
       
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../api/" class="md-tabs__link">
           
   
   API Reference
@@ -497,6 +495,8 @@
       
   
   
+    
+  
   
     
     
@@ -506,17 +506,17 @@
       
       
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../guides/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -533,7 +533,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Guides
@@ -544,9 +544,29 @@
                 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../guides/daos/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    DAOS at ALCF
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -555,6 +575,54 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-daos-pool-and-container" class="md-nav__link">
+    Create a DAOS Pool and Container
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-connector" class="md-nav__link">
+    Create a Connector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-with-a-store" class="md-nav__link">
+    Using with a Store
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -571,8 +639,6 @@
       
   
   
-    
-  
   
     
     
@@ -582,12 +648,12 @@
       
       
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
@@ -601,7 +667,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             API Reference
@@ -612,8 +678,6 @@
                 
   
   
-    
-  
   
     
     
@@ -623,12 +687,12 @@
       
       
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
         
           
           <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="">
@@ -642,7 +706,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_1">
             <span class="md-nav__icon md-icon"></span>
             ProxyStore Extensions
@@ -655,7 +719,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../api/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -673,25 +737,23 @@
                 
   
   
-    
-  
   
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_2" >
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="./" class="md-nav__link md-nav__link--active">
+            <a href="../../api/connectors/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -702,13 +764,13 @@
             </a>
             
               
-              <label class="md-nav__link md-nav__link--active" for="__nav_3_1_2" id="__nav_3_1_2_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_1_2" id="__nav_3_1_2_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_1_2">
             <span class="md-nav__icon md-icon"></span>
             proxystore_ex.connectors
@@ -721,7 +783,7 @@
   
   
     <li class="md-nav__item">
-      <a href="daos/" class="md-nav__link">
+      <a href="../../api/connectors/daos/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -755,7 +817,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="dim/" class="md-nav__link ">
+            <a href="../../api/connectors/dim/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -785,7 +847,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dim/exceptions/" class="md-nav__link">
+      <a href="../../api/connectors/dim/exceptions/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -805,7 +867,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dim/margo/" class="md-nav__link">
+      <a href="../../api/connectors/dim/margo/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -825,7 +887,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dim/models/" class="md-nav__link">
+      <a href="../../api/connectors/dim/models/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -845,7 +907,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dim/ucx/" class="md-nav__link">
+      <a href="../../api/connectors/dim/ucx/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -865,7 +927,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dim/utils/" class="md-nav__link">
+      <a href="../../api/connectors/dim/utils/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -885,7 +947,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dim/zmq/" class="md-nav__link">
+      <a href="../../api/connectors/dim/zmq/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1071,8 +1133,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#proxystore_ex.connectors" class="md-nav__link">
-    proxystore_ex.connectors
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-daos-pool-and-container" class="md-nav__link">
+    Create a DAOS Pool and Container
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-connector" class="md-nav__link">
+    Create a Connector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-with-a-store" class="md-nav__link">
+    Using with a Store
   </a>
   
 </li>
@@ -1095,42 +1178,104 @@
   
 
 
-<h1 id="proxystore_exconnectors">proxystore_ex.connectors<a class="headerlink" href="#proxystore_exconnectors" title="Permanent link">&para;</a></h1>
-
-
-<div class="doc doc-object doc-module">
-
-
-<a id="proxystore_ex.connectors"></a>
-  <div class="doc doc-contents">
-      <a target="_blank" href="https://github.com/proxystore/proxystore/blob/main/proxystore_ex/connectors/__init__.py"><code>proxystore_ex/connectors/__init__.py</code></a>
-  </div>
-
-  <div class="doc doc-contents first">
-  
-      <p>Connector implementations.</p>
-<p>This is an extension of the <a class="autorefs autorefs-external" href="https://docs.proxystore.dev/main/api/connectors/#proxystore.connectors"><code>proxystore.connectors</code></a>
-module.</p>
-
-  
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-
-  </div>
-
+<h1 id="daos-at-alcf">DAOS at ALCF<a class="headerlink" href="#daos-at-alcf" title="Permanent link">&para;</a></h1>
+<p><em>Last updated 10 October 2023</em></p>
+<p>This guide shows you how to use ProxyStore with DAOS at
+<a href="https://www.alcf.anl.gov/" target="_blank">ALCF</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While some parts of this guide is specific to ALCF, the general steps
+should apply to any system with a DAOS cluster.</p>
 </div>
+<p>The Distributed Asynchronous Object Storage (DAOS) is a distributed object
+store designed for high-speed non-volatile memory storage like Intel Optane
+and NVMe. ALCF's Sunspot and Aurora systems have or will have DAOS deployments.</p>
+<p>ProxyStore Extensions provides support for DAOS via the
+<a class="autorefs autorefs-internal" href="../../api/connectors/daos/#proxystore_ex.connectors.daos.DAOSConnector"><code>DAOSConnector</code></a> which uses
+<a href="https://www.intel.com/content/www/us/en/developer/articles/case-study/unlock-the-power-of-daos-in-python-with-pydaos.html">PyDAOS</a>
+internally to connect to a DAOS pool.</p>
+<p>References:</p>
+<ul>
+<li><a href="https://docs.daos.io/v2.4/" target="_blank">DAOS v2.4 Documentation</a></li>
+<li><a href="https://www.intel.com/content/www/us/en/developer/articles/case-study/unlock-the-power-of-daos-in-python-with-pydaos.html" target="_blank">PyDAOS Introduction</a></li>
+<li><a href="https://github.com/daos-stack/daos/tree/release/2.4/src/client/pydaos" target="_blank">PyDAOS v2.4 Implementation</a></li>
+<li><a href="https://www.alcf.anl.gov/support-center/aurorasunspot/getting-started-sunspot#daos" target="_blank">DAOS on ALCF's Sunspot</a></li>
+</ul>
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
+<p>PyDAOS is automatically installed into your systems Python and does not
+currently provide any wheels for pip installation. This means that on Sunspot,
+PyDAOS is only available via the Python 3.6 installation which is older than
+what ProxyStore is compatible with. To get around this, we will create a
+newer Python virtual environment and copy the system version into the virtual
+environment.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Load necessary modules on Sunspot</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>module<span class="w"> </span>load<span class="w"> </span>daos
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>module<span class="w"> </span>load<span class="w"> </span>cray-python
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># Create a virtual environment with ProxyStore Extensions installed</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>.<span class="w"> </span>venv/bin/activate
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>pip<span class="w"> </span>install<span class="w"> </span>proxystore-ex
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># Copy the system pydaos into our environment</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>cp<span class="w"> </span>-r<span class="w"> </span>/usr/lib64/python3.6/site-packages/pydaos/<span class="w"> </span><span class="nv">$PWD</span>/venv/lib64/python3.9/site-packages/
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1"># Verify that pydaos imports</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import pydaos&quot;</span>
+</span></code></pre></div>
+<h2 id="create-a-daos-pool-and-container">Create a DAOS Pool and Container<a class="headerlink" href="#create-a-daos-pool-and-container" title="Permanent link">&para;</a></h2>
+<p>PyDAOS requires an existing DAOS pool and container.
+On Sunspot, a DAOS pool allocation can be requested from ALCF support.
+Once you have a DAOS pool and its name (for ALCF this will be the name of the
+allocation you requested it under), you can create a container in the pool.
+The type must by <code>PYTHON</code> for use with PyDAOS, but the container label
+can be anything you want.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>daos<span class="w"> </span>container<span class="w"> </span>create<span class="w"> </span><span class="nv">$POOL_NAME</span><span class="w"> </span>--type<span class="o">=</span>PYTHON<span class="w"> </span>--label<span class="o">=</span>demo-container
+</span></code></pre></div>
+<h2 id="create-a-connector">Create a Connector<a class="headerlink" href="#create-a-connector" title="Permanent link">&para;</a></h2>
+<p>Creating a <a class="autorefs autorefs-internal" href="../../api/connectors/daos/#proxystore_ex.connectors.daos.DAOSConnector"><code>DAOSConnector</code></a>
+is simple.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">proxystore_ex.connectors.daos</span> <span class="kn">import</span> <span class="n">DAOSConnector</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">with</span> <span class="n">DAOSConnector</span><span class="p">(</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">pool</span><span class="o">=...</span><span class="p">,</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="n">container</span><span class="o">=</span><span class="s1">&#39;demo-container&#39;</span><span class="p">,</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="n">namespace</span><span class="o">=</span><span class="s1">&#39;proxystore&#39;</span><span class="p">,</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="p">)</span> <span class="k">as</span> <span class="n">connector</span><span class="p">:</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="n">key</span> <span class="o">=</span> <span class="n">connector</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="k">assert</span> <span class="n">connector</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="k">assert</span> <span class="n">connector</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;data&#39;</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="n">connector</span><span class="o">.</span><span class="n">evict</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    <span class="k">assert</span> <span class="ow">not</span> <span class="n">connector</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span></code></pre></div>
+<p>The <code>namespace</code> argument is used as the name for the DAOS dictionary created
+within the DAOS container that you provided. All operations by the connector
+will be done within that "namespace" or dictionary. This is helpful for
+preventing ProxyStore from clashing with other operations from other programs
+on the same container.</p>
+<h2 id="using-with-a-store">Using with a Store<a class="headerlink" href="#using-with-a-store" title="Permanent link">&para;</a></h2>
+<p>A <a class="autorefs autorefs-internal" href="../../api/connectors/daos/#proxystore_ex.connectors.daos.DAOSConnector"><code>DAOSConnector</code></a> can be used
+to initialize a ProxyStore <a class="autorefs autorefs-external" href="https://docs.proxystore.dev/main/api/store/base/#proxystore.store.base.Store"><code>Store</code></a>.
+Learn more about the <a class="autorefs autorefs-external" href="https://docs.proxystore.dev/main/api/store/base/#proxystore.store.base.Store"><code>Store</code></a> interface in the
+<a href="https://docs.proxystore.dev/main/get-started/">Get Started</a> guide.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">proxystore.store</span> <span class="kn">import</span> <span class="n">Store</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span> <span class="nn">proxystore_ex.connectors.daos</span> <span class="kn">import</span> <span class="n">DAOSConnector</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">connector</span> <span class="o">=</span> <span class="n">DAOSConnector</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="n">pool</span><span class="o">=...</span><span class="p">,</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="n">container</span><span class="o">=</span><span class="s1">&#39;demo-container&#39;</span><span class="p">,</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="n">namespace</span><span class="o">=</span><span class="s1">&#39;proxystore&#39;</span><span class="p">,</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="p">)</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="k">with</span> <span class="n">Store</span><span class="p">(</span><span class="s1">&#39;my-store&#39;</span> <span class="n">connector</span><span class="p">)</span> <span class="k">as</span> <span class="n">store</span><span class="p">:</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>    <span class="n">key</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">my_object</span><span class="p">)</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    <span class="k">assert</span> <span class="n">store</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">my_object</span><span class="p">)</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    <span class="n">p</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">proxy</span><span class="p">(</span><span class="n">my_object</span><span class="p">)</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">my_object</span><span class="p">))</span>
+</span></code></pre></div>
 
 
 
