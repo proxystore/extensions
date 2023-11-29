@@ -73,8 +73,8 @@ class MargoConnector:
     Args:
         port: The desired port for the spawned server.
         protocol: The communication protocol to use.
-        address: The network IP to use for transfer. Has precedence over `interface`
-            if both are provided.
+        address: The network IP to use for transfer. Has precedence over
+            `interface` if both are provided.
         interface: The network interface to use. `addr` has precedence over
             this attribute if both are provided.
         timeout: Timeout in seconds to try connecting to a local server before

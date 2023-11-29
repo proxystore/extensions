@@ -35,7 +35,6 @@ repository = "https://github.com/proxystore/extensions"
 
 [project.optional-dependencies]
 dev = [
-    "black",
     "covdefaults>=2.2",
     "coverage",
     "mypy",
@@ -58,11 +57,6 @@ docs = [
     "mkdocstrings[python]",
     "mike",
 ]
-
-[tool.black]
-line-length = 79
-target-version = ["py38"]
-skip-string-normalization = true
 
 [tool.codespell]
 skip = """
@@ -158,6 +152,7 @@ extend-ignore = [
     # Allow pytest.raises() without match
     "PT011",
 ]
+line-length = 79
 target-version = "py38"
 
 [tool.ruff.flake8-pytest-style]
@@ -165,6 +160,10 @@ parametrize-values-type = "tuple"
 
 [tool.ruff.flake8-quotes]
 inline-quotes = "single"
+
+[tool.ruff.format]
+indent-style = "space"
+quote-style = "single"
 
 [tool.ruff.isort]
 force-single-line = true

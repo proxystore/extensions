@@ -497,7 +497,8 @@ def spawn_server(
 
     wait_for_server(address, port, timeout=spawn_timeout)
     logger.debug(
-        f'Server started (host={address}, port={port}, pid={server_process.pid})',
+        'Server started '
+        f'(host={address}, port={port}, pid={server_process.pid})',
     )
 
     return server_process
