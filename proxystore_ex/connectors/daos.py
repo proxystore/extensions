@@ -13,8 +13,19 @@ if sys.version_info >= (3, 11):  # pragma: >=3.11 cover
 else:  # pragma: <3.11 cover
     from typing_extensions import Self
 
+try:
+    import pydaos
+except ImportError as e:  # pragma: no cover
+    if e.msg == "No module named 'pydaos'":
+        import_error_message = """\
+The pydaos package is not installed.
 
-import pydaos
+Check out the DAOS guide for installation instructions:
+    https://extensions.proxystore.dev/latest/guides/daos/\
+"""
+        raise ImportError(import_error_message) from e
+    else:
+        raise
 
 
 class DAOSKey(NamedTuple):
