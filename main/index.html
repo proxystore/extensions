@@ -475,6 +475,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1161,6 +1170,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1183,14 +1201,30 @@
 <p><a href="https://github.com/proxystore/extensions/actions"><img alt="docs" src="https://github.com/proxystore/extensions/actions/workflows/docs.yml/badge.svg" /></a>
 <a href="https://github.com/proxystore/extensions/actions"><img alt="tests" src="https://github.com/proxystore/extensions/actions/workflows/tests.yml/badge.svg" /></a>
 <a href="https://results.pre-commit.ci/latest/github/proxystore/extensions/main"><img alt="pre-commit.ci status" src="https://results.pre-commit.ci/badge/github/proxystore/extensions/main.svg" /></a></p>
-<p>Extensions for the <a href="https://github.com/proxystore/proxystore/">ProxyStore package</a>.</p>
+<p>Extensions for the <a href="https://github.com/proxystore/proxystore/">ProxyStore</a>.</p>
+<p>This extensions package contains experimental features, features with
+non-Python dependencies, and plugins for third-party tools.</p>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>proxystore-ex
-</span></code></pre></div>
-<p>See the <a href="https://extensions.proxystore.dev/main/installation">Installation</a> guide for more information about the available extra install options.
-For local development, see the <a href="https://extensions.proxystore.dev/main/contributing">Contributing</a> guide.</p>
+<p>The extensions package can be installed alongside
+<a href="https://github.com/proxystore/proxystore/">ProxyStore</a>.
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>proxystore<span class="o">[</span>extensions<span class="o">]</span>
+</span></code></pre></div></p>
+<p>Alternatively, the package can be installed directly.
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>proxystore-ex
+</span></code></pre></div></p>
+<p>See the <a href="https://extensions.proxystore.dev/main/installation">Installation</a>
+guide for more information about features which require extra dependencies.
+See the <a href="https://extensions.proxystore.dev/main/contributing">Contributing</a>
+guide to get started with local development.</p>
 <h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
 <p>ProxyStore's documentation is available at <a href="https://docs.proxystore.dev">docs.proxystore.dev</a> and supplemental documentation for the extensions package is available at <a href="https://extensions.proxystore.dev">extensions.proxystore.dev</a>.</p>
+<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
+<p>Features in the <code>proxystore_ex</code> package can be imported from within
+<code>proxystore</code> via the <a href="https://docs.proxystore.dev/latest/api/ex/"><code>proxystore.ex</code></a>
+module. This is the recommended method for import extension features. E.g.,</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">proxystore_ex.connectors.daos</span> <span class="kn">import</span> <span class="n">DAOSConnector</span>  <span class="c1"># Direct</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span> <span class="nn">proxystore.ex.connectors.daos</span> <span class="kn">import</span> <span class="n">DAOSConnector</span>  <span class="c1"># Recommended</span>
+</span></code></pre></div>
 
 
 

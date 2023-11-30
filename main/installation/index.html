@@ -1159,23 +1159,29 @@
 
   <h1>Installation</h1>
 
-<p>We always recommend installing packages inside of your virtual environment of choice.
-E.g.,
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>$<span class="w"> </span>.<span class="w"> </span>venv/bin/activate
-</span></code></pre></div></p>
-<p>Once your virtual environment is activated, ProxyStore Extensions with <code>pip</code>.</p>
-<p>note::
-    ProxyStore Extensions will install ProxyStore as a dependency. However,
-    none of the extra options will be included with ProxyStore. See the
-    <a href="https://docs.proxystore.dev/main/installation">ProxyStore Installation</a>
-    guide for how to install the base ProxyStore package with extra options.</p>
+<p>ProxyStore Extensions should be installed alongside
+<a href="https://github.com/proxystore/proxystore" target="_blank">ProxyStore</a>.
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>proxystore<span class="o">[</span>extensions<span class="o">]</span>
+</span></code></pre></div>
+Checkout <a href="https://docs.proxystore.dev/latest/installation/" target="_blank">ProxyStore's Installation Guide</a> for more details.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>ProxyStore Extensions can be installed directly.
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>proxystore-ex
 </span></code></pre></div>
+This is generally not recommended because this will install the base
+ProxyStore package if it is not installed already. This means that
+none of the extra options from ProxyStore that you may need will be
+installed. See the
+<a href="https://docs.proxystore.dev/main/installation">ProxyStore Installation Guide</a>
+for how to install the base ProxyStore package with extra options.</p>
+</div>
 <h2 id="distributed-in-memory-connectors">Distributed In-Memory Connectors<a class="headerlink" href="#distributed-in-memory-connectors" title="Permanent link">&para;</a></h2>
 <p>The <a class="autorefs autorefs-internal" href="../api/connectors/dim/margo/#proxystore_ex.connectors.dim.margo.MargoConnector"><code>MargoConnector</code></a> and
 <a class="autorefs autorefs-internal" href="../api/connectors/dim/ucx/#proxystore_ex.connectors.dim.ucx.UCXConnector"><code>UCXConnector</code></a> have additional
-manual installation steps to be completed before they can be used.</p>
+manual installation steps to be completed before they can be used. These
+steps are reasonably involved and may change over time so checkout the
+following resources for the most up-to-date instructions.</p>
 <ul>
 <li><strong>Margo:</strong><ul>
 <li>Install <a href="https://github.com/mochi-hpc/mochi-margo" target="_blank">Mochi-Margo</a> and the dependencies</li>
