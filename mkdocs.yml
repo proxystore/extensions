@@ -137,6 +137,7 @@ plugins:
           import:
             - https://docs.python.org/3/objects.inv
             - https://docs.proxystore.dev/main/objects.inv
+            - https://distributed.dask.org/en/latest/objects.inv
           options:
             docstring_section_style: list
             docstring_style: google
