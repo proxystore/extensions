@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import copyreg
+import functools
+import sys
 import warnings
 from functools import partial
 from typing import Any
@@ -10,6 +12,11 @@ from typing import Iterable
 from typing import Mapping
 from typing import NoReturn
 from typing import TypeVar
+
+if sys.version_info >= (3, 10):  # pragma: >3.10 cover
+    from typing import ParamSpec
+else:  # pragma: <3.10 cover
+    from typing_extensions import ParamSpec
 
 import cloudpickle
 from dask.base import normalize_token
@@ -27,8 +34,10 @@ from proxystore.serialize import serialize
 from proxystore.store import get_store
 from proxystore.store import Store
 from proxystore.store.utils import get_key
+from proxystore.store.utils import resolve_async
 
 T = TypeVar('T')
+P = ParamSpec('P')
 
 
 def _proxy_reduce(
@@ -114,7 +123,8 @@ class Client(DaskDistributedClient):
         actors=False,
         pure=True,
         batch_size=None,
-        proxy: bool = True,
+        proxy_args: bool = True,
+        proxy_result: bool = True,
         **kwargs,
     ):
         """Map a function on a sequence of arguments.
@@ -123,21 +133,25 @@ class Client(DaskDistributedClient):
         but arguments and return values larger than the ProxyStore threshold
         size will be passed-by-proxy.
 
-        This method provides a `proxy: bool = True` flag which can be used
-        to disable proxying for a single invocation.
+        This method adds the `proxy_args` and `proxy_result` flags (default
+        `True`) which can be used to disable proxying of function arguments
+        or return values, respectively, for a single invocation.
 
         Note:
             Proxied arguments will be evicted from the store when the
             future containing the result of the function application is set.
         """
         total_length = sum(len(x) for x in iterables)
-        if not (batch_size and batch_size > 1 and total_length > batch_size):
+        if (
+            not (batch_size and batch_size > 1 and total_length > batch_size)
+            and self._ps_store is not None
+        ):
             # map() partitions the iterators if batching needs to be performed
             # and calls itself again on each of the batches in the iterators.
             # In this case, we don't want to proxy the pre-batched iterators
             # and instead want to wait to proxy until the later calls to map()
             # on each batch.
-            if self._ps_store is not None and proxy:
+            if proxy_args:
                 key = key or funcname(func)
                 iterables = list(zip(*zip(*iterables)))  # type: ignore[assignment]
                 if not isinstance(key, list) and pure:
@@ -168,6 +182,14 @@ class Client(DaskDistributedClient):
                     evict=False,
                 )
 
+            if proxy_result:
+                func = wrap_proxy_result(
+                    func,
+                    store=self._ps_store,
+                    threshold=self._ps_threshold,
+                    evict=True,
+                )
+
         futures = super().map(
             func,
             *iterables,
@@ -185,7 +207,7 @@ class Client(DaskDistributedClient):
             **kwargs,
         )
 
-        if self._ps_store is not None and proxy:
+        if self._ps_store is not None and proxy_args:
             for future, *args in zip(futures, *iterables):
                 proxied_args = [v for v in args if isinstance(v, Proxy)]
                 callback = partial(
@@ -211,7 +233,8 @@ class Client(DaskDistributedClient):
         actor=False,
         actors=False,
         pure=True,
-        proxy: bool = True,
+        proxy_args: bool = True,
+        proxy_result: bool = True,
         **kwargs,
     ):
         """Submit a function application to the scheduler.
@@ -221,15 +244,16 @@ class Client(DaskDistributedClient):
         return values larger than the ProxyStore threshold size will be
         passed-by-proxy.
 
-        This method provides a `proxy: bool = True` flag which can be used
-        to disable proxying for a single invocation.
+        This method adds the `proxy_args` and `proxy_result` flags (default
+        `True`) which can be used to disable proxying of function arguments
+        or return values, respectively, for a single invocation.
 
         Note:
             Proxied arguments will be evicted from the store when the
             future containing the result of the function application is set.
         """
         proxied_args: list[Proxy[Any]] = []
-        if self._ps_store is not None and proxy:
+        if self._ps_store is not None and proxy_args:
             if key is None and pure:
                 # Calling tokenize() on args/kwargs containing proxies will
                 # fail because the tokenize dispatch mechanism will perform
@@ -256,6 +280,14 @@ class Client(DaskDistributedClient):
             )
             proxied_args.extend(
                 v for v in kwargs.values() if isinstance(v, Proxy)
+            )
+
+        if self._ps_store is not None and proxy_result:
+            func = wrap_proxy_result(
+                func,
+                store=self._ps_store,
+                threshold=self._ps_threshold,
+                evict=True,
             )
 
         future = super().submit(
@@ -286,12 +318,17 @@ class Client(DaskDistributedClient):
 
 
 def _evict_proxies_callback(
-    _future: Future[Any],
+    future: Future[Any],
     proxies: Iterable[Proxy[Any]],
     store: Store[Any],
 ) -> None:
     for proxy in proxies:
         store.evict(get_key(proxy))
+
+    result = future.result()
+    if isinstance(result, Proxy):
+        resolve_async(result)
+        # TODO: should we evict here?
 
 
 def _serialize_and_proxy(
@@ -381,3 +418,36 @@ def proxy_mapping(
         )
         for k in m
     }
+
+
+def wrap_proxy_result(
+    func: Callable[P, T],
+    store: Store[Any],
+    threshold: int,
+    evict: bool = True,
+) -> Callable[P, T | Proxy[T]]:
+    """Wrap a function to proxies return values larger than a threshold size.
+
+    Args:
+        func: Function to wrap.
+        store: Store to use to proxy the result.
+        threshold: Threshold size in bytes.
+        evict: Evict flag value to pass to the created proxy.
+
+    Returns:
+        Callable with the same shape as `func` but that returns either the
+        original return type or a proxy of the return type.
+    """
+
+    @functools.wraps(func)
+    def _proxy_wrapper(*args: P.args, **kwargs: P.kwargs) -> T | Proxy[T]:
+        result = func(*args, **kwargs)
+        proxy_or_result = _serialize_and_proxy(
+            result,
+            store=store,
+            threshold=threshold,
+            evict=evict,
+        )
+        return proxy_or_result
+
+    return _proxy_wrapper
