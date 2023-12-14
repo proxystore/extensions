@@ -37,6 +37,14 @@ from proxystore.store import get_store
 from proxystore.store import Store
 from proxystore.store.factory import StoreFactory
 from proxystore.store.types import ConnectorKeyT
+from proxystore.warnings import ExperimentalWarning
+
+warnings.warn(
+    'Dask plugins are an experimental feature and may exhibit unexpected '
+    'behaviour or change in the future.',
+    category=ExperimentalWarning,
+    stacklevel=2,
+)
 
 T = TypeVar('T')
 P = ParamSpec('P')
