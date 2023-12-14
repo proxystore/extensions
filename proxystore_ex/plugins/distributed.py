@@ -18,10 +18,17 @@ if sys.version_info >= (3, 10):  # pragma: >3.10 cover
 else:  # pragma: <3.10 cover
     from typing_extensions import ParamSpec
 
-from dask.base import tokenize
-from dask.utils import funcname
-from distributed import Client as DaskDistributedClient
-from distributed import Future as DaskDistributedFuture
+try:
+    from dask.base import tokenize
+    from dask.utils import funcname
+    from distributed import Client as DaskDistributedClient
+    from distributed import Future as DaskDistributedFuture
+except ImportError as e:  # pragma: no cover
+    raise ImportError(
+        'The dask and distributed packages must both be installed to '
+        'use the associated plugins.',
+    ) from e
+
 from proxystore.connectors.protocols import Connector
 from proxystore.proxy import _proxy_trampoline
 from proxystore.proxy import Proxy
