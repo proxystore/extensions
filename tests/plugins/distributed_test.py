@@ -103,6 +103,30 @@ def test_client_proxy_skip_result(tmp_path: pathlib.Path) -> None:
         unregister_store(store)
 
 
+def test_client_submit_manual_proxy(tmp_path: pathlib.Path) -> None:
+    with Store(
+        'test_client_submit_manual_proxy',
+        FileConnector(str(tmp_path / 'proxy-cache')),
+    ) as store:
+        register_store(store)
+
+        client = Client(
+            ps_store=store,
+            ps_threshold=int(1e6),
+            n_workers=1,
+            processes=False,
+        )
+
+        x = store.proxy([1, 2, 3])
+
+        future = client.submit(sum, x, key='test-client-submit-manual-proxy')
+        assert future.result() == 6
+
+        client.close()
+
+        unregister_store(store)
+
+
 def test_pseudoproxy_by_size() -> None:
     test_obj = 'foobar'
     with Store('test_pseudoproxy_by_size', LocalConnector()) as store:

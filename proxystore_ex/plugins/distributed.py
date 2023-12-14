@@ -453,9 +453,6 @@ def pseudoproxy_iterable(
         larger than the threshold size replaced with factories which
         can later be used to construct proxies.
     """
-    if threshold is None:
-        return tuple(iterable)
-
     return tuple(
         pseudoproxy_by_size(
             value,
@@ -493,9 +490,6 @@ def pseudoproxy_mapping(
         but objects larger than the threshold size are replaced with factories
         which can be later used to construct proxies.
     """
-    if threshold is None:
-        return dict(mapping)
-
     return {
         key: pseudoproxy_by_size(
             mapping[key],
