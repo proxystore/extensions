@@ -11,7 +11,6 @@ from typing import Callable
 from typing import cast
 from typing import Iterable
 from typing import Mapping
-from typing import NoReturn
 from typing import TypeVar
 
 if sys.version_info >= (3, 10):  # pragma: >3.10 cover
@@ -19,9 +18,7 @@ if sys.version_info >= (3, 10):  # pragma: >3.10 cover
 else:  # pragma: <3.10 cover
     from typing_extensions import ParamSpec
 
-from dask.base import normalize_token
 from dask.base import tokenize
-from dask.sizeof import sizeof
 from dask.utils import funcname
 from distributed import Client as DaskDistributedClient
 from distributed import Future as DaskDistributedFuture
@@ -39,16 +36,6 @@ P = ParamSpec('P')
 ConnectorT = TypeVar('ConnectorT', bound=Connector[Any])
 
 logger = logging.getLogger(__name__)
-
-
-@sizeof.register(Proxy)
-def _sizeof_proxy(p: Proxy[Any]) -> int:
-    return sys.getsizeof(p)
-
-
-@normalize_token.register(Proxy)
-def _normalize_proxy(p: Proxy[Any]) -> NoReturn:
-    raise TypeError('Token normalization not support on Proxy types.')
 
 
 class Future(DaskDistributedFuture):
