@@ -37,6 +37,8 @@ repository = "https://github.com/proxystore/extensions"
 dev = [
     "covdefaults>=2.2",
     "coverage",
+    "dask",
+    "distributed",
     "mypy",
     "pre-commit",
     "pytest",

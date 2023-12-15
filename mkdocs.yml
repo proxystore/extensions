@@ -112,6 +112,7 @@ nav:
   - Guides:
       - guides/index.md
       - DAOS at ALCF: guides/daos.md
+      - Dask with ProxyStore: guides/dask-distributed.md
   - API Reference:
       - ProxyStore Extensions: api/
   - Contributing:
@@ -137,6 +138,7 @@ plugins:
           import:
             - https://docs.python.org/3/objects.inv
             - https://docs.proxystore.dev/main/objects.inv
+            - https://distributed.dask.org/en/latest/objects.inv
           options:
             docstring_section_style: list
             docstring_style: google
