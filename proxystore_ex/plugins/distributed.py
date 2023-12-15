@@ -392,8 +392,8 @@ def pseudoproxy_by_size(
         evict: Evict flag value to pass to created proxies.
 
     Returns:
-        The input object `x` if `x` is smaller than `threshold` otherwise
-        a [`StoreFactory`][proxystore.store.factory.StoreFactory] which can
+        The input object `x` if `x` is smaller than `threshold` otherwise \
+        a [`StoreFactory`][proxystore.store.factory.StoreFactory] which can \
         be used to initialize a [`Proxy`][proxystore.proxy.Proxy].
     """
     if threshold is None:
@@ -432,7 +432,7 @@ def pseudoproxy_iterable(
     store: Store[ConnectorT],
     threshold: int | None = None,
     evict: bool = True,
-) -> tuple[Any, ...]:
+) -> tuple:  # type: ignore[type-arg]
     """Psuedoproxy values in an iterable than the threshold size.
 
     This function is "pseudo" because values larger than the threshold size
@@ -449,8 +449,8 @@ def pseudoproxy_iterable(
         evict: Evict flag value to pass to created proxies.
 
     Returns:
-        Tuple containing the objects yielded by the iterable with objects
-        larger than the threshold size replaced with factories which
+        Tuple containing the objects yielded by the iterable with objects \
+        larger than the threshold size replaced with factories which \
         can later be used to construct proxies.
     """
     return tuple(
@@ -486,9 +486,9 @@ def pseudoproxy_mapping(
         evict: Evict flag value to pass to created proxies.
 
     Returns:
-        Mapping containing the same keys and values as the input mapping
-        but objects larger than the threshold size are replaced with factories
-        which can be later used to construct proxies.
+        Mapping containing the same keys and values as the input mapping \
+        but objects larger than the threshold size are replaced with \
+        factories which can be later used to construct proxies.
     """
     return {
         key: pseudoproxy_by_size(
@@ -520,8 +520,8 @@ def proxy_task_wrapper(
         evict: Evict flag value to pass to the created proxy.
 
     Returns:
-        Callable with the same shape as `func` but that returns either the
-        original return type or a factory of the return type which can be
+        Callable with the same shape as `func` but that returns either the \
+        original return type or a factory of the return type which can be \
         used to construct a proxy.
     """
 

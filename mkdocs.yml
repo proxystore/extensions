@@ -112,6 +112,7 @@ nav:
   - Guides:
       - guides/index.md
       - DAOS at ALCF: guides/daos.md
+      - Dask with ProxyStore: guides/dask-distributed.md
   - API Reference:
       - ProxyStore Extensions: api/
   - Contributing:
