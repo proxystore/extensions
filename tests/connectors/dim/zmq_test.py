@@ -16,11 +16,8 @@ from proxystore_ex.connectors.dim.zmq import ZeroMQServer
 from testing.compat import randbytes
 from testing.utils import open_port
 
-if platform.system() == 'Darwin':  # pragma: no cover
-    # MacOS GitHub Actions runners are slow
-    TIMEOUT = 1.0
-else:  # pragma: no cover
-    TIMEOUT = 0.5
+# MacOS GitHub Actions runners are slow
+TIMEOUT = 1.0 if platform.system() == 'Darwin' else 0.5
 
 TEST_KEY = DIMKey(
     'zmq',

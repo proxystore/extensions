@@ -110,6 +110,8 @@ select = [
     "F",
     # pycodestyle
     "E",
+    # mccabe
+    "C90",
     # isort
     "I",
     # pep8-naming
@@ -118,6 +120,8 @@ select = [
     "D",
     # pyupgrade
     "UP",
+    # flake8-2020
+    "YTT",
     # flake8-bugbear
     "B",
     # flake8-builtins
@@ -134,6 +138,8 @@ select = [
     "Q",
     # flake8-debugger
     "T10",
+    # flake8-simplify
+    "SIM",
     # PyLint
     "PLE", "PLW",
     # ruff-specific
@@ -153,6 +159,8 @@ extend-ignore = [
     "C419",
     # Allow pytest.raises() without match
     "PT011",
+    # Allow try-except-pass and nested with statements
+    "SIM105", "SIM117",
 ]
 line-length = 79
 target-version = "py38"
