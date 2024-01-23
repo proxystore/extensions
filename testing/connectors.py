@@ -112,11 +112,8 @@ def zmq_connector() -> Generator[Connector[Any], None, None]:
     """ZeroMQ store fixture."""
     port = open_port()
 
-    if platform.system() == 'Darwin':  # pragma: no cover
-        # MacOS GitHub Actions runners are slow
-        timeout = 1.0
-    else:  # pragma: no cover
-        timeout = 0.5
+    # MacOS GitHub Actions runners are slow
+    timeout = 1.0 if platform.system() == 'Darwin' else 0.5
 
     with zmq.ZeroMQConnector(
         port=port,
