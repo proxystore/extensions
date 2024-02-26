@@ -2,11 +2,8 @@ from __future__ import annotations
 
 from typing import Any
 
-try:
-    from proxystore.connectors.connector import Connector
-except ImportError:  # pragma: no cover
-    # This import changed in ProxyStore v0.6.1
-    from proxystore.connectors.protocols import Connector
+from proxystore.connectors.protocols import Connector
+from proxystore.connectors.protocols import DeferrableConnector
 
 
 def test_connector_repr(connectors: Connector[Any]) -> None:
@@ -51,3 +48,15 @@ def test_connector_config(connectors: Connector[Any]) -> None:
 
     assert isinstance(new_connector, Connector)
     assert type(connector) == type(new_connector)
+
+
+def test_deferrable_connector_ops(connectors: Connector[Any]) -> None:
+    connector = connectors
+
+    if isinstance(connector, DeferrableConnector):  # pragma: no break
+        obj = b'test_value'
+        key = connector.new_key(obj)
+        assert not connector.exists(key)
+        connector.set(key, obj)
+        connector.set(key, obj)
+        assert connector.get(key) == obj
