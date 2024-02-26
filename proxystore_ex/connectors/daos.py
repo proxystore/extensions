@@ -227,6 +227,25 @@ class DAOSConnector:
             objs.append(self.get(key))
         return objs
 
+    def new_key(self, obj: bytes | None = None) -> DAOSKey:
+        """Create a new key.
+
+        Args:
+            obj: Optional object which the key will be associated with.
+                Ignored in this implementation.
+
+        Returns:
+            Key which can be used to retrieve an object once \
+            [`set()`][proxystore_ex.connectors.daos.DAOSConnector.set] \
+            has been called on the key.
+        """
+        return DAOSKey(
+            pool=self.pool,
+            container=self.container,
+            namespace=self.namespace,
+            dict_key=str(uuid.uuid4()),
+        )
+
     def put(self, obj: bytes) -> DAOSKey:
         """Put a serialized object in the store.
 
@@ -266,3 +285,24 @@ class DAOSConnector:
         ]
         self._dict.bput({key.dict_key: obj for key, obj in zip(keys, objs)})
         return keys
+
+    def set(self, key: DAOSKey, obj: bytes) -> None:
+        """Set the object associated with a key.
+
+        Note:
+            The [`Connector`][proxystore.connectors.protocols.Connector]
+            provides write-once, read-many semantics. Thus,
+            [`set()`][proxystore.connectors.protocols.DeferrableConnector.set]
+            should only be called once per key, otherwise unexpected behavior
+            can occur.
+
+        Warning:
+            This method is not required to be atomic and could therefore
+            result in race conditions with calls to
+            [`get()`][proxystore.connectors.protocols.Connector.get].
+
+        Args:
+            key: Key that the object will be associated with.
+            obj: Object to associate with the key.
+        """
+        self._dict.put(key.dict_key, obj)
