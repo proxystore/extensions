@@ -1,4 +1,5 @@
 """Message types for communication with DIM servers."""
+
 from __future__ import annotations
 
 import sys

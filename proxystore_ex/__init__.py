@@ -11,6 +11,7 @@
     from proxystore.ex.connectors.daos import DAOSConnector
     ```
 """
+
 from __future__ import annotations
 
 import importlib.metadata as importlib_metadata

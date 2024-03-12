@@ -1,4 +1,5 @@
 """Custom ProxyStore client for Dask Distributed."""
+
 from __future__ import annotations
 
 import functools

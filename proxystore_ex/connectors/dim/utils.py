@@ -1,4 +1,5 @@
 """Shared functions used by DIM stores."""
+
 from __future__ import annotations
 
 import fcntl

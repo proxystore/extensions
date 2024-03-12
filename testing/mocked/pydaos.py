@@ -7,6 +7,7 @@ where possible. There are some strange choices in it...
 Reference implementation:
 https://github.com/daos-stack/daos/blob/release/2.4/src/client/pydaos/pydaos_core.py
 """
+
 from __future__ import annotations
 
 from typing import Any
