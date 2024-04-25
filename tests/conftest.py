@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import sys
+from typing import Generator
 
 try:
     import pydaos
@@ -25,8 +26,22 @@ except ImportError:
 
     sys.modules['ucp'] = ucp
 
+import proxystore
+import pytest
+
 from testing.connectors import connectors
 from testing.connectors import daos_connector
 from testing.connectors import margo_connector
 from testing.connectors import ucx_connector
 from testing.connectors import zmq_connector
+
+
+@pytest.fixture(autouse=True)
+def _verify_no_registered_stores() -> Generator[None, None, None]:
+    yield
+
+    if len(proxystore.store._stores) > 0:  # pragma: no cover
+        raise RuntimeError(
+            'Test left at least one store registered: '
+            f'{tuple(proxystore.store._stores.keys())}.',
+        )

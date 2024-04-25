@@ -31,13 +31,12 @@ except ImportError as e:  # pragma: no cover
     ) from e
 
 from proxystore.connectors.protocols import Connector
-from proxystore.proxy import get_factory
 from proxystore.proxy import Proxy
 from proxystore.serialize import serialize
 from proxystore.store import get_store
 from proxystore.store import Store
-from proxystore.store.factory import StoreFactory
 from proxystore.store.types import ConnectorKeyT
+from proxystore.store.utils import get_key
 from proxystore.warnings import ExperimentalWarning
 
 warnings.warn(
@@ -54,31 +53,67 @@ ConnectorT = TypeVar('ConnectorT', bound=Connector[Any])
 logger = logging.getLogger(__name__)
 
 
-class Future(DaskDistributedFuture):
-    """Custom future which returns results as proxies as necessary.
-
-    The ProxyStore Dask [`Client`][proxystore_ex.plugins.distributed.Client]
-    can return large function results as a
-    [`StoreFactory`][proxystore.store.factory.StoreFactory] instance which
-    will return the actual function result when invoked. This custom
-    Dask [`Future`][distributed.Future] will wrap result factories in a
-    [`Proxy`][proxystore.proxy.Proxy].
-    """
-
-    def result(self, timeout: int | None = None) -> Any:
-        """Wait until computation completes, gather result to local process."""
-        result = super().result()
-        if isinstance(result, StoreFactory):
-            result = Proxy(result)
-        return result
-
-
 class Client(DaskDistributedClient):
     """Dask Distributed Client with ProxyStore support.
 
     This is a wrapper around [`dask.distributed.Client`][distributed.Client]
     that proxies function arguments and return values using a provided
     [`Store`][proxystore.store.base.Store] and threshold size.
+
+    !!! warning
+
+        The custom Dask [`Client`][proxystore_ex.plugins.distributed.Client]
+        is an experimental feature and the API may change in the future. If you
+        encounter unexpected behavior, please
+        [open a bug report](https://github.com/proxystore/extensions/issues/new/choose){target=_blank}.
+
+    Using this custom client is as easy as changing your import and passing
+    two extra arguments to the constructor.
+
+    ```python linenums="1" title="example.py" hl_lines="3 9"
+    import tempfile
+
+    from proxystore.ex.plugins.distributed import Client  # (1)!
+    from proxystore.connectors.file import FileConnector
+    from proxystore.store import Store
+
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        with Store('default', FileConnector(tmp_dir), register=True) as store:
+            client = Client(..., ps_store=store, ps_threshold=100)  # (2)!
+
+            x = list(range(100))
+            p = store.proxy(x)
+            y = client.submit(sum, p)
+
+            print(f'Result: {y.result()}')
+
+            client.close()
+    ```
+
+    1. Change the import of `Client` from `dask.distributed` to
+       `proxystore.ex.plugins.distributed`.
+    2. Pass your [`Store`][proxystore.store.base.Store] and threshold object
+       size. Serialized objects larger than the threshold size in bytes will
+       be serialized using the store you provide and pass-by-proxy.
+
+    The custom [`Client`][proxystore_ex.plugins.distributed.Client] behaves
+    exactly as a normal Dask client when `ps_store` is `None`. But when
+    ProxyStore is configured, function args, kwargs, and results from
+    passed to or from [`Client.submit()`][distributed.Client.submit] and
+    [`Client.map()`][distributed.Client.map] will be scanned and proxied as
+    necessary based on their size.
+
+    When invoking a function, you can alter this behavior by passing
+    `proxy_args=False` and/or `proxy_result=False` to disable proxying for that
+    specific function submission to the scheduler.
+
+    !!! warning
+
+        There are some edge cases to be aware of when using the automatic
+        proxying. Please read the documentation for
+        [`Client.submit()`][proxystore_ex.plugins.distributed.Client.submit]
+        and [`Client.map()`][proxystore_ex.plugins.distributed.Client.map] for
+        the most up to date details.
 
     Args:
         args: Positional arguments to pass to
@@ -143,6 +178,8 @@ class Client(DaskDistributedClient):
         Note:
             Proxied arguments will be evicted from the store when the
             future containing the result of the function application is set.
+            However, proxied keyword arguments shared across all functions
+            will not be evict if they were proxied.
 
         Warning:
             Unless the function is explicitly marked as not pure, a function
@@ -161,22 +198,16 @@ class Client(DaskDistributedClient):
             # In this case, we don't want to proxy the pre-batched iterators
             # and instead want to wait to proxy until the later calls to map()
             # on each batch.
-
             key = key or funcname(func)
             iterables = list(zip(*zip(*iterables)))  # type: ignore[assignment]
             if not isinstance(key, list) and pure:  # pragma: no branch
-                # Calling tokenize() on args/kwargs containing proxies will
-                # fail because the tokenize dispatch mechanism will perform
-                # introspection on the proxy. To avoid this failure, we
-                # can create the key before proxying. Source:
-                # https://github.com/dask/distributed/blob/6d1e1333a72dd78811883271511070c70369402b/distributed/client.py#L2126
                 key = [
                     f'{key}-{tokenize(func, kwargs, *args)}-proxy'
                     for args in zip(*iterables)
                 ]
 
             iterables = tuple(
-                pseudoproxy_iterable(
+                proxy_iterable(
                     iterable,
                     store=self._ps_store,
                     threshold=self._ps_threshold if proxy_args else None,
@@ -185,7 +216,7 @@ class Client(DaskDistributedClient):
                 for iterable in iterables
             )
 
-            kwargs = pseudoproxy_mapping(
+            kwargs = proxy_mapping(
                 kwargs,
                 store=self._ps_store,
                 threshold=self._ps_threshold if proxy_args else None,
@@ -201,7 +232,7 @@ class Client(DaskDistributedClient):
                 evict=not pure,
             )
 
-        base_futures = super().map(
+        futures = super().map(
             func,
             *iterables,
             key=key,
@@ -222,20 +253,9 @@ class Client(DaskDistributedClient):
             not (batch_size and batch_size > 1 and total_length > batch_size)
             and self._ps_store is not None
         ):
-            futures = [
-                Future(
-                    key=base_future.key,
-                    client=base_future._client,
-                    inform=base_future._inform,
-                    state=base_future._state,
-                )
-                for base_future in base_futures
-            ]
-            del base_futures
-
             for future, *args in zip(futures, *iterables):
                 proxied_args_keys = [
-                    f.key for f in args if isinstance(f, StoreFactory)
+                    get_key(x) for x in args if isinstance(x, Proxy)
                 ]
                 # TODO: how to delete kwargs?
                 callback = partial(
@@ -245,9 +265,15 @@ class Client(DaskDistributedClient):
                 )
                 future.add_done_callback(callback)
 
-            return futures
-        else:
-            return base_futures
+            if any(isinstance(x, Proxy) for x in kwargs.values()):
+                warnings.warn(
+                    'A keyword argument to map() was proxied, but proxied '
+                    'keyword arguments will not be automatically evicted. '
+                    'This can lead to memory leaks.',
+                    stacklevel=2,
+                )
+
+        return futures
 
     def submit(  # type: ignore[no-untyped-def]
         self,
@@ -292,15 +318,10 @@ class Client(DaskDistributedClient):
         proxied_args_keys: list[ConnectorKeyT] = []
         if self._ps_store is not None:
             if key is None and pure:  # pragma: no branch
-                # Calling tokenize() on args/kwargs containing proxies will
-                # fail because the tokenize dispatch mechanism will perform
-                # introspection on the proxy. To avoid this failure, we
-                # can create the key before proxying. Source:
-                # https://github.com/dask/distributed/blob/6d1e1333a72dd78811883271511070c70369402b/distributed/client.py#L1942
                 key = f'{funcname(func)}-{tokenize(func, kwargs, *args)}-proxy'
                 pure = False
 
-            args = pseudoproxy_iterable(
+            args = proxy_iterable(
                 args,
                 store=self._ps_store,
                 threshold=self._ps_threshold if proxy_args else None,
@@ -309,17 +330,17 @@ class Client(DaskDistributedClient):
                 evict=False,
             )
             proxied_args_keys.extend(
-                f.key for f in args if isinstance(f, StoreFactory)
+                get_key(x) for x in args if isinstance(x, Proxy)
             )
 
-            kwargs = pseudoproxy_mapping(
+            kwargs = proxy_mapping(
                 kwargs,
                 store=self._ps_store,
                 threshold=self._ps_threshold if proxy_args else None,
                 evict=False,
             )
             proxied_args_keys.extend(
-                f.key for f in kwargs.values() if isinstance(f, StoreFactory)
+                get_key(x) for x in kwargs.values() if isinstance(x, Proxy)
             )
 
             func = proxy_task_wrapper(
@@ -331,7 +352,7 @@ class Client(DaskDistributedClient):
                 evict=not pure,
             )
 
-        base_future = super().submit(
+        future = super().submit(
             func,
             *args,
             key=key,
@@ -348,14 +369,6 @@ class Client(DaskDistributedClient):
         )
 
         if self._ps_store is not None:
-            future = Future(
-                key=base_future.key,
-                client=base_future._client,
-                inform=base_future._inform,
-                state=base_future._state,
-            )
-            del base_future
-
             callback = partial(
                 _evict_proxies_callback,
                 keys=proxied_args_keys,
@@ -363,13 +376,11 @@ class Client(DaskDistributedClient):
             )
             future.add_done_callback(callback)
 
-            return future
-        else:
-            return base_future
+        return future
 
 
 def _evict_proxies_callback(
-    _future: Future,
+    _future: DaskDistributedFuture,
     keys: Iterable[ConnectorKeyT],
     store: Store[Any],
 ) -> None:
@@ -377,12 +388,12 @@ def _evict_proxies_callback(
         store.evict(key)
 
 
-def pseudoproxy_by_size(
-    x: T | Proxy[T],
+def proxy_by_size(
+    x: T,
     store: Store[ConnectorT],
     threshold: int | None = None,
     evict: bool = True,
-) -> T | StoreFactory[ConnectorT, T]:
+) -> T | Proxy[T]:
     """Serialize an object and proxy it if the object is larger enough.
 
     Args:
@@ -394,16 +405,10 @@ def pseudoproxy_by_size(
 
     Returns:
         The input object `x` if `x` is smaller than `threshold` otherwise \
-        a [`StoreFactory`][proxystore.store.factory.StoreFactory] which can \
-        be used to initialize a [`Proxy`][proxystore.proxy.Proxy].
+        a [`Proxy`][proxystore.proxy.Proxy] of `x`.
     """
-    if threshold is None:
+    if threshold is None or isinstance(x, Proxy):
         return x
-
-    if isinstance(x, Proxy):
-        # Shortcut to replace proxies with their factories because
-        # proxies are not compatible with Dask as function arguments.
-        return cast(StoreFactory[ConnectorT, T], get_factory(x))
 
     s = serialize(x)
 
@@ -411,10 +416,26 @@ def pseudoproxy_by_size(
         proxy = store.proxy(
             s,
             evict=evict,
+            # We can't use populate_target here because we are passing
+            # the serialized object to store.proxy(), not the actual object.
+            # populate_target=True,
             serializer=lambda x: x,
             skip_nonproxiable=True,
         )
-        return cast(StoreFactory[ConnectorT, T], get_factory(proxy))
+
+        # This is dangerous code, but is taken from the Proxy constructor
+        # to essentially mimic what populate_target=True would have done
+        # above but using the actual target object x and not the serialized s.
+        object.__setattr__(proxy, '__proxy_target__', x)
+        object.__setattr__(proxy, '__proxy_default_class__', x.__class__)
+        default_hash: Exception | int
+        try:
+            default_hash = hash(x)
+        except TypeError as e:
+            default_hash = e
+        object.__setattr__(proxy, '__proxy_default_hash__', default_hash)
+
+        return cast(Proxy[T], proxy)
     else:
         # In this case, we paid the cost of serializing x but did not use
         # that serialization of x so it will be serialized again using
@@ -423,24 +444,16 @@ def pseudoproxy_by_size(
         # which get serialized twice. Large objects above the threshold only
         # get serialized once by ProxyStore and the lightweight proxy is
         # serialized by Dask.
-        res = x
-
-    return res
+        return x
 
 
-def pseudoproxy_iterable(
+def proxy_iterable(
     iterable: Iterable[Any],
     store: Store[ConnectorT],
     threshold: int | None = None,
     evict: bool = True,
 ) -> tuple:  # type: ignore[type-arg]
-    """Psuedoproxy values in an iterable than the threshold size.
-
-    This function is "pseudo" because values larger than the threshold size
-    are technically proxied, but the proxies are discarded and only the
-    internal factory is returned. This is because Dask does not play nicely
-    with serializing proxy types so we pass the factories instead and
-    reconstruct the proxies later.
+    """Proxy values in an iterable larger than the threshold size.
 
     Args:
         iterable: Iterable containing possibly large values to proxy.
@@ -451,11 +464,10 @@ def pseudoproxy_iterable(
 
     Returns:
         Tuple containing the objects yielded by the iterable with objects \
-        larger than the threshold size replaced with factories which \
-        can later be used to construct proxies.
+        larger than the threshold size replaced with proxies.
     """
     return tuple(
-        pseudoproxy_by_size(
+        proxy_by_size(
             value,
             store=store,
             threshold=threshold,
@@ -465,19 +477,13 @@ def pseudoproxy_iterable(
     )
 
 
-def pseudoproxy_mapping(
+def proxy_mapping(
     mapping: Mapping[T, Any],
     store: Store[ConnectorT],
     threshold: int | None = None,
     evict: bool = True,
 ) -> dict[T, Any]:
-    """Psuedoproxy values in a mapping larger than the threshold size.
-
-    This function is "pseudo" because values larger than the threshold size
-    are technically proxied, but the proxies are discarded and only the
-    internal factory is returned. This is because Dask does not play nicely
-    with serializing proxy types so we pass the factories instead and
-    reconstruct the proxies later.
+    """Proxy values in a mapping larger than the threshold size.
 
     Args:
         mapping: Mapping containing possibly large values to proxy.
@@ -488,11 +494,10 @@ def pseudoproxy_mapping(
 
     Returns:
         Mapping containing the same keys and values as the input mapping \
-        but objects larger than the threshold size are replaced with \
-        factories which can be later used to construct proxies.
+        but objects larger than the threshold size are replaced with proxies.
     """
     return {
-        key: pseudoproxy_by_size(
+        key: proxy_by_size(
             mapping[key],
             store=store,
             threshold=threshold,
@@ -507,12 +512,10 @@ def proxy_task_wrapper(
     store: Store[ConnectorT],
     threshold: int | None = None,
     evict: bool = True,
-) -> Callable[P, T | StoreFactory[ConnectorT, T]]:
+) -> Callable[P, T | Proxy[T]]:
     """Proxy task wrapper.
 
-    Wraps a task function with mechanisms to translate StoreFactory types
-    to Proxy types initialized with the factory and to proxy return
-    values larger than a threshold.
+    Wraps a task function to proxy returns values larger than a threshold.
 
     Args:
         func: Function to wrap.
@@ -527,31 +530,14 @@ def proxy_task_wrapper(
     """
 
     @functools.wraps(func)
-    def _proxy_wrapper(
-        *args: P.args,
-        **kwargs: P.kwargs,
-    ) -> T | StoreFactory[ConnectorT, T]:
-        args = cast(
-            P.args,
-            tuple(
-                Proxy(v) if isinstance(v, StoreFactory) else v for v in args
-            ),
-        )
-        kwargs = cast(
-            P.kwargs,
-            {
-                k: Proxy(v) if isinstance(v, StoreFactory) else v
-                for k, v in kwargs.items()
-            },
-        )
-
+    def _proxy_wrapper(*args: P.args, **kwargs: P.kwargs) -> T | Proxy[T]:
         result = func(*args, **kwargs)
-        factory_or_result = pseudoproxy_by_size(
+        proxy_or_result = proxy_by_size(
             result,
             store=store,
             threshold=threshold,
             evict=evict,
         )
-        return factory_or_result
+        return proxy_or_result
 
     return _proxy_wrapper
