@@ -6,8 +6,8 @@ build-backend = "setuptools.build_meta"
 name = "proxystore-ex"
 version = "0.1.3dev1"
 authors = [
-    {name = "Globus Labs"},
     {name = "Greg Pauloski", email = "jgpauloski@uchicago.edu"},
+    {name = "Globus Labs"},
 ]
 maintainers = [
     {name = "Greg Pauloski", email = "jgpauloski@uchicago.edu"},
@@ -19,19 +19,23 @@ requires-python = ">=3.8"
 license = {text = "MIT"}
 classifiers = [
     "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: Implementation :: CPython",
 ]
 dependencies = [
-    "proxystore>=0.5.0",
+    "proxystore>=0.6.5",
     "pyzmq",
 ]
 
 [project.urls]
-homepage = "https://proxystore.dev"
-documentation = "https://extensions.proxystore.dev"
-repository = "https://github.com/proxystore/extensions"
+Homepage = "https://proxystore.dev"
+Documentation = "https://extensions.proxystore.dev"
+Source = "https://github.com/proxystore/extensions"
 
 [project.optional-dependencies]
 dev = [
@@ -81,6 +85,7 @@ parallel = true
 
 [tool.mypy]
 python_version = "3.10"
+plugins = [ "proxystore.mypy_plugin" ]
 check_untyped_defs = true
 disallow_any_generics = true
 disallow_incomplete_defs = true
