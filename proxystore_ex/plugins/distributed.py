@@ -31,7 +31,7 @@ except ImportError as e:  # pragma: no cover
     ) from e
 
 from proxystore.connectors.protocols import Connector
-from proxystore.proxy import _proxy_trampoline
+from proxystore.proxy import get_factory
 from proxystore.proxy import Proxy
 from proxystore.serialize import serialize
 from proxystore.store import get_store
@@ -69,7 +69,7 @@ class Future(DaskDistributedFuture):
         """Wait until computation completes, gather result to local process."""
         result = super().result()
         if isinstance(result, StoreFactory):
-            result = _proxy_trampoline(result)
+            result = Proxy(result)
         return result
 
 
@@ -403,7 +403,7 @@ def pseudoproxy_by_size(
     if isinstance(x, Proxy):
         # Shortcut to replace proxies with their factories because
         # proxies are not compatible with Dask as function arguments.
-        return x.__factory__
+        return cast(StoreFactory[ConnectorT, T], get_factory(x))
 
     s = serialize(x)
 
@@ -414,7 +414,7 @@ def pseudoproxy_by_size(
             serializer=lambda x: x,
             skip_nonproxiable=True,
         )
-        res = proxy.__factory__
+        return cast(StoreFactory[ConnectorT, T], get_factory(proxy))
     else:
         # In this case, we paid the cost of serializing x but did not use
         # that serialization of x so it will be serialized again using
@@ -534,14 +534,13 @@ def proxy_task_wrapper(
         args = cast(
             P.args,
             tuple(
-                _proxy_trampoline(v) if isinstance(v, StoreFactory) else v
-                for v in args
+                Proxy(v) if isinstance(v, StoreFactory) else v for v in args
             ),
         )
         kwargs = cast(
             P.kwargs,
             {
-                k: _proxy_trampoline(v) if isinstance(v, StoreFactory) else v
+                k: Proxy(v) if isinstance(v, StoreFactory) else v
                 for k, v in kwargs.items()
             },
         )

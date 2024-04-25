@@ -28,4 +28,7 @@ repos:
     rev: v1.9.0
     hooks:
       - id: mypy
-        additional_dependencies: []
+        additional_dependencies:
+          - dask[distributed]
+          - proxystore >= 0.6.5
+          - pyzmq

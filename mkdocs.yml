@@ -107,7 +107,7 @@ nav:
   - Home:
       - Overview: index.md
       - Installation: installation.md
-      - Known Issues: known-issues.md
+      - Issues (GitHub): https://github.com/proxystore/issues
       - Changelog (GitHub): https://github.com/proxystore/extensions/releases
   - Guides:
       - guides/index.md

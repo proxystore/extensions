@@ -5,6 +5,7 @@ import pathlib
 import pytest
 from proxystore.connectors.file import FileConnector
 from proxystore.connectors.local import LocalConnector
+from proxystore.proxy import get_factory
 from proxystore.proxy import Proxy
 from proxystore.store import register_store
 from proxystore.store import Store
@@ -140,6 +141,7 @@ def test_pseudoproxy_by_size() -> None:
         # Passing a proxy should return its factory
         x = pseudoproxy_by_size(Proxy(_factory), store, 0)
         assert x == _factory
+        assert not isinstance(x, str)
         assert x() == test_obj
 
         # Large threshold will not proxy object
@@ -198,10 +200,10 @@ def test_proxy_task_wrapper() -> None:
 
         foo = proxy_task_wrapper(_foo, store, threshold=8, evict=True)
 
-        b = store.proxy('b' * 10, evict=True).__factory__
-        d = store.proxy('d' * 10, evict=True).__factory__
+        b = get_factory(store.proxy('b' * 10, evict=True))
+        d = get_factory(store.proxy('d' * 10, evict=True))
 
-        result = foo(1, b, c=2, d=d)
+        result = foo(1, b, c=2, d=d)  # type: ignore[arg-type]
 
         assert isinstance(result, StoreFactory)
         assert result() == '1bbbbbbbbbb2dddddddddd'
