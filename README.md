@@ -1,10 +1,14 @@
 # ProxyStore Extensions
 
+![PyPI - Version](https://img.shields.io/pypi/v/proxystore-ex)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/proxystore-ex)
+![GitHub License](https://img.shields.io/github/license/proxystore/extensions)
+
 [![docs](https://github.com/proxystore/extensions/actions/workflows/docs.yml/badge.svg)](https://github.com/proxystore/extensions/actions)
 [![tests](https://github.com/proxystore/extensions/actions/workflows/tests.yml/badge.svg)](https://github.com/proxystore/extensions/actions)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/proxystore/extensions/main.svg)](https://results.pre-commit.ci/latest/github/proxystore/extensions/main)
 
-Extensions for the [ProxyStore](https://github.com/proxystore/proxystore/).
+Extensions for the [ProxyStore](https://github.com/proxystore/proxystore/) package.
 
 This extensions package contains experimental features, features with
 non-Python dependencies, and plugins for third-party tools.
