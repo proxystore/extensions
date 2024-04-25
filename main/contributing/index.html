@@ -450,11 +450,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../known-issues/" class="md-nav__link">
+      <a href="https://github.com/proxystore/issues" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Known Issues
+    Issues (GitHub)
   </span>
   
 
@@ -1229,7 +1229,7 @@ environment with all of the required packages installed
 and ProxyStore installed in editable mode with the necessary extras options.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/proxystore/extensions
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>extensions
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>$<span class="w"> </span>tox<span class="w"> </span>--devenv<span class="w"> </span>venv<span class="w"> </span>-e<span class="w"> </span>py310
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>$<span class="w"> </span>tox<span class="w"> </span>--devenv<span class="w"> </span>venv<span class="w"> </span>-e<span class="w"> </span>py311
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>$<span class="w"> </span>.<span class="w"> </span>venv/bin/activate
 </span></code></pre></div>
 <div class="admonition warning">
@@ -1259,8 +1259,8 @@ Python 3.9.</p>
 <p>The entire CI workflow can be run with <code class="language-bash highlight">$<span class="w"> </span>tox</code>.
 This will test against multiple versions of Python and can be slow.</p>
 <p>Module-level unit-test are located in the <code>tests/</code> directory and its
-structure is intended to match that of <code>proxystore_extensions/</code>.
-E.g. the tests for <code>proxystore_extenions/x/y.py</code> are located in
+structure is intended to match that of <code>proxystore_ex/</code>.
+E.g. the tests for <code>proxystore_ex/x/y.py</code> are located in
 <code>tests/x/y_test.py</code>; however, additional test files can be added
 as needed. Tests should be narrowly focused and target a single aspect of the
 code's functionality, tests should not test internal implementation details of
@@ -1268,9 +1268,9 @@ the code, and tests should not be dependent on the order in which they are run.<
 <p>Code that is useful for building tests but is not a test itself belongs in the
 <code>testing/</code> directory.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Run all tests in tests/</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>py39
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>py311
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># Run a specific test</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>py39<span class="w"> </span>--<span class="w"> </span>tests/x/y_test.py::test_z
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>py311<span class="w"> </span>--<span class="w"> </span>tests/x/y_test.py::test_z
 </span></code></pre></div>
 <h3 id="tests-docker">Tests (docker)<a class="headerlink" href="#tests-docker" title="Permanent link">&para;</a></h3>
 <p>The test suite mocks certain third-party programs that cannot be installed via
@@ -1284,7 +1284,7 @@ the un-mocked software.</p>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># Be sure to change the path to your proxystore repo directory</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--network<span class="w"> </span>host<span class="w"> </span>-v<span class="w"> </span>/path/to/proxystore:/proxystore<span class="w"> </span>ghcr.io/proxystore/proxystore-dim:nightly
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># Inside container</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>py310-dim
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>py311-dim
 </span></code></pre></div>
 <h2 id="docs">Docs<a class="headerlink" href="#docs" title="Permanent link">&para;</a></h2>
 <p>If code changes require an update to the documentation (e.g., for function
