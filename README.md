@@ -45,3 +45,7 @@ module. This is the recommended method for import extension features. E.g.,
 from proxystore_ex.connectors.daos import DAOSConnector  # Direct
 from proxystore.ex.connectors.daos import DAOSConnector  # Recommended
 ```
+
+## Citation
+
+The preferred citations for this code are provided at https://docs.proxystore.dev/latest/publications/.
