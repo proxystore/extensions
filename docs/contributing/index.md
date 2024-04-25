@@ -8,7 +8,7 @@ and ProxyStore installed in editable mode with the necessary extras options.
 ```bash
 $ git clone https://github.com/proxystore/extensions
 $ cd extensions
-$ tox --devenv venv -e py310
+$ tox --devenv venv -e py311
 $ . venv/bin/activate
 ```
 
@@ -49,8 +49,8 @@ The entire CI workflow can be run with `#!bash $ tox`.
 This will test against multiple versions of Python and can be slow.
 
 Module-level unit-test are located in the `tests/` directory and its
-structure is intended to match that of `proxystore_extensions/`.
-E.g. the tests for `proxystore_extenions/x/y.py` are located in
+structure is intended to match that of `proxystore_ex/`.
+E.g. the tests for `proxystore_ex/x/y.py` are located in
 `tests/x/y_test.py`; however, additional test files can be added
 as needed. Tests should be narrowly focused and target a single aspect of the
 code's functionality, tests should not test internal implementation details of
@@ -61,9 +61,9 @@ Code that is useful for building tests but is not a test itself belongs in the
 
 ```bash
 # Run all tests in tests/
-$ tox -e py39
+$ tox -e py311
 # Run a specific test
-$ tox -e py39 -- tests/x/y_test.py::test_z
+$ tox -e py311 -- tests/x/y_test.py::test_z
 ```
 
 ### Tests (docker)
@@ -81,7 +81,7 @@ $ docker pull ghcr.io/proxystore/proxystore-dim:nightly
 # Be sure to change the path to your proxystore repo directory
 $ docker run --rm -it --network host -v /path/to/proxystore:/proxystore ghcr.io/proxystore/proxystore-dim:nightly
 # Inside container
-$ tox -e py310-dim
+$ tox -e py311-dim
 ```
 
 ## Docs
