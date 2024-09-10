@@ -33,6 +33,7 @@ except ImportError as e:  # pragma: no cover
 from proxystore.connectors.protocols import Connector
 from proxystore.proxy import Proxy
 from proxystore.serialize import serialize
+from proxystore.store import get_or_create_store
 from proxystore.store import get_store
 from proxystore.store import Store
 from proxystore.store.types import ConnectorKeyT
@@ -343,6 +344,7 @@ class Client(DaskDistributedClient):
                 get_key(x) for x in kwargs.values() if isinstance(x, Proxy)
             )
 
+            # CHANGE WRAPPER TO NOT SERIALIZE STORE
             func = proxy_task_wrapper(
                 func,
                 store=self._ps_store,
@@ -528,13 +530,18 @@ def proxy_task_wrapper(
         original return type or a factory of the return type which can be \
         used to construct a proxy.
     """
+    store_config = store.config()
 
     @functools.wraps(func)
     def _proxy_wrapper(*args: P.args, **kwargs: P.kwargs) -> T | Proxy[T]:
         result = func(*args, **kwargs)
+        # A Store is not serializable so we do not want this closure
+        # to capture the store variable. Rather, we capture the config
+        # and retrieve the store based on the config.
+        func_local_store = get_or_create_store(store_config)
         proxy_or_result = proxy_by_size(
             result,
-            store=store,
+            store=func_local_store,
             threshold=threshold,
             evict=evict,
         )
