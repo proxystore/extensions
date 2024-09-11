@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "proxystore-ex"
-version = "0.1.4dev1"
+version = "0.1.4"
 authors = [
     {name = "Greg Pauloski", email = "jgpauloski@uchicago.edu"},
     {name = "Globus Labs"},
