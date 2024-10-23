@@ -84,7 +84,7 @@ def test_handle_server_error_responses() -> None:
     port = open_port()
     with mock.patch('proxystore_ex.connectors.dim.zmq.wait_for_server'):
         with ZeroMQConnector(port, timeout=TIMEOUT) as connector:
-            with mock.patch.object(
+            with mock.patch.object(  # pragma: no branch
                 connector.socket,
                 'send_multipart',
             ), mock.patch.object(
@@ -92,7 +92,10 @@ def test_handle_server_error_responses() -> None:
                 'recv_multipart',
                 return_value=[serialize(response)],
             ):
-                with pytest.raises(RuntimeError, match='xyz'):
+                with pytest.raises(
+                    RuntimeError,
+                    match='xyz',
+                ):  # pragma: no branch
                     connector._send_rpcs([rpc])
 
 
