@@ -12,7 +12,7 @@ from testing.mocked.pydaos import DCont as MockDCont
 from testing.mocked.pydaos import DDict as MockDDict
 
 
-@pytest.fixture()
+@pytest.fixture
 def connector() -> Generator[DAOSConnector, None, None]:
     with mock.patch('pydaos.DCont', MockDCont), mock.patch(
         'pydaos.DDict',

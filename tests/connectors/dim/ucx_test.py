@@ -33,7 +33,7 @@ TEST_KEY = DIMKey(
 )
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio
 async def test_connector_spawns_server() -> None:
     with mock.patch(
         'proxystore_ex.connectors.dim.ucx.wait_for_server',
@@ -124,7 +124,7 @@ def test_server_handle_rpc_exception() -> None:
     assert response.exception is not None
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio
 async def test_server_handler() -> None:
     server = UCXServer()
 
@@ -147,7 +147,7 @@ async def test_server_handler() -> None:
     assert response.exception is None
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio
 async def test_server_handler_ping() -> None:
     server = UCXServer()
 
@@ -167,8 +167,8 @@ async def test_server_handler_ping() -> None:
 
 
 # NOTE: this test causes random hangs with Click's CLIRunner
-@pytest.mark.skip()
-@pytest.mark.asyncio()
+@pytest.mark.skip
+@pytest.mark.asyncio
 async def test_run_server() -> None:  # pragma: no cover
     loop = asyncio.get_running_loop()
     future = loop.create_future()
@@ -198,7 +198,7 @@ def test_mocked_spawn_server() -> None:
 
 
 # This test will hang when run in the Docker image
-@pytest.mark.skip()
+@pytest.mark.skip
 @pytest.mark.skipif(
     UCP_SPEC is not None and 'mock' in UCP_SPEC.name,
     reason='Not compatible with mocked UCP module.',
