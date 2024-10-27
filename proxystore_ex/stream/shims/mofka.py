@@ -15,10 +15,16 @@ else:  # pragma: <3.11 cover
     from typing_extensions import Self
 
 
-import pymargo.core
-from mochi.mofka.client import DataDescriptor
-from mochi.mofka.client import MofkaDriver
-from pymargo.core import Engine
+try:
+    import pymargo.core
+    from mochi.mofka.client import DataDescriptor
+    from mochi.mofka.client import MofkaDriver
+    from pymargo.core import Engine
+
+    mofka_import_error = None
+
+except ImportError as e:  # pragma: no cover
+    mofka_import_error = e
 
 
 class MofkaPublisher:
@@ -30,6 +36,9 @@ class MofkaPublisher:
     """
 
     def __init__(self, protocol: str, group_file: str) -> None:
+        if mofka_import_error is not None:  # pragma: no cover
+            raise mofka_import_error
+
         self._engine = Engine(protocol, pymargo.core.server)
         self._driver = MofkaDriver(group_file, self._engine)
 
@@ -75,6 +84,9 @@ class MofkaSubscriber:
         topic_name: str,
         subscriber_name: str,
     ) -> None:
+        if mofka_import_error is not None:  # pragma: no cover
+            raise mofka_import_error
+
         self._engine = Engine(protocol, pymargo.core.server)
         self._driver = MofkaDriver(group_file, self._engine)
         self._topic = self._driver.open_topic(topic_name)
