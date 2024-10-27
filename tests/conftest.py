@@ -27,13 +27,8 @@ except ImportError:
     sys.modules['ucp'] = ucp
 
 import proxystore
+import proxystore.store
 import pytest
-
-from testing.connectors import connectors
-from testing.connectors import daos_connector
-from testing.connectors import margo_connector
-from testing.connectors import ucx_connector
-from testing.connectors import zmq_connector
 
 
 @pytest.fixture(autouse=True)
