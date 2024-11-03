@@ -7,6 +7,8 @@ package.
 
 from __future__ import annotations
 
+import cloudpickle
+import json
 import sys
 
 if sys.version_info >= (3, 11):  # pragma: >=3.11 cover
@@ -14,11 +16,19 @@ if sys.version_info >= (3, 11):  # pragma: >=3.11 cover
 else:  # pragma: <3.11 cover
     from typing_extensions import Self
 
+from proxystore.stream.events import dict_to_event
+from proxystore.stream.events import event_to_dict
+from proxystore.stream.events import EndOfStreamEvent
+from proxystore.stream.events import EventBatch
+from proxystore.stream.events import NewObjectEvent
+from proxystore.stream.events import NewObjectKeyEvent
 
 try:
     import pymargo.core
     from mochi.mofka.client import DataDescriptor
     from mochi.mofka.client import MofkaDriver
+    from mochi.mofka.client import AdaptiveBatchSize
+    from mochi.mofka.client import Ordering
     from pymargo.core import Engine
 
     mofka_import_error = None
@@ -35,6 +45,8 @@ class MofkaPublisher:
         group_file: Bedrock generated group file.
     """
 
+    # TODO: strip code of all of these and leave it to users to specify themselves
+    # and just provide the driver.
     def __init__(self, protocol: str, group_file: str) -> None:
         if mofka_import_error is not None:  # pragma: no cover
             raise mofka_import_error
@@ -50,17 +62,38 @@ class MofkaPublisher:
         self._engine.finalize()
         del self._engine
 
-    def send(self, topic: str, message: bytes) -> None:
+    def send_events(self, events: EventBatch) -> None:
         """Publish a message to the stream.
 
         Args:
             topic: Stream topic to publish message to.
             message: Message as bytes to publish to the stream.
         """
+
+        topic = events.topic
+        batch_size = AdaptiveBatchSize
+        ordering = Ordering.Strict
+
         self._topic = self._driver.open_topic(topic)
-        self.producer = self._topic.producer()
-        self.producer.push(metadata=message, data=message)
-        self.producer.flush()
+        self.producer = self._topic.producer(
+            batch_size=batch_size,
+            ordering=ordering,
+        )
+
+        for e in events.events:
+            if isinstance(e, NewObjectEvent):
+                self.producer.push(
+                    metadata=json.dumps(e.metadata),
+                    data=cloudpickle.dumps(e.obj),
+                )
+            else:
+                self.producer.push(
+                    metadata=json.dumps(event_to_dict(e)),
+                    data=cloudpickle.dumps(''),
+                )
+
+            # TODO: figure out how to properly batch in mofka
+            self.producer.flush()
 
 
 class MofkaSubscriber:
@@ -136,8 +169,22 @@ class MofkaSubscriber:
         return self
 
     def __next__(self) -> bytes:
-        message = self.consumer.pull().wait()
-        return bytes(message.data[0])
+        return self.next_events()
+
+    def next_events(self) -> EventBatch:
+        metadata: EndOfStreamEvent | NewObjectKeyEvent | NewObjectEvent
+
+        events = self.consumer.pull().wait()
+        data = cloudpickle.loads(events.data[0])
+
+        try:
+            metadata = dict_to_event(json.loads(events.metadata))
+        except Exception:
+            metadata = NewObjectEvent(
+                topic=self._topic, metadata=events.metadata, obj=data
+            )
+
+        return EventBatch(topic=self._topic, events=[metadata])
 
     def close(self) -> None:
         """Close this subscriber."""

@@ -1,11 +1,12 @@
 from __future__ import annotations
 
-import json
 
 import pytest
 
-from proxystore_ex.stream.shims.mofka import MofkaPublisher
-from proxystore_ex.stream.shims.mofka import MofkaSubscriber
+from proxystore.stream.events import EventBatch
+from proxystore.stream.events import NewObjectEvent
+from proxystore.ex.stream.shims.mofka import MofkaPublisher
+from proxystore.ex.stream.shims.mofka import MofkaSubscriber
 
 
 @pytest.mark.usefixtures('_conf_mofka')
@@ -23,15 +24,16 @@ def test_basic_publish_subscribe() -> None:
         subscriber_name=subscriber_name,
     )
 
-    messages = [
-        json.dumps({'data': f'message_{i}'}).encode() for i in range(3)
+    messages: list[NewObjectEvent] = [
+        NewObjectEvent(topic=topic, metadata={'some_data': i}, obj=i)
+        for i in range(1, 4)
     ]
-    for message in messages:
-        publisher.send('default', message)
+    events = EventBatch(topic=topic, events=messages)
+    publisher.send_events(events)
 
     publisher.close()
 
     for expected, received in zip(messages, subscriber):
-        assert received == expected
+        assert received.events[0].obj == expected.obj
 
     subscriber.close()
