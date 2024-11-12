@@ -40,6 +40,17 @@ from proxystore.store.types import ConnectorKeyT
 from proxystore.store.utils import get_key
 from proxystore.warnings import ExperimentalWarning
 
+try:  # pragma: >3.9 cover
+    from dask._task_spec import DataNode
+
+    class _ProxyNode(DataNode):
+        key: ConnectorKeyT
+        value: Proxy[Any]
+
+    USE_TASK_SPEC = True
+except ImportError:  # pragma: <=3.9 cover
+    USE_TASK_SPEC = False
+
 warnings.warn(
     'Dask plugins are an experimental feature and may exhibit unexpected '
     'behaviour or change in the future.',
@@ -208,7 +219,7 @@ class Client(DaskDistributedClient):
                 ]
 
             iterables = tuple(
-                proxy_iterable(
+                _proxy_iterable(
                     iterable,
                     store=self._ps_store,
                     threshold=self._ps_threshold if proxy_args else None,
@@ -217,14 +228,14 @@ class Client(DaskDistributedClient):
                 for iterable in iterables
             )
 
-            kwargs = proxy_mapping(
+            kwargs = _proxy_mapping(
                 kwargs,
                 store=self._ps_store,
                 threshold=self._ps_threshold if proxy_args else None,
                 evict=False,
             )
 
-            func = proxy_task_wrapper(
+            func = _proxy_task_wrapper(
                 func,
                 store=self._ps_store,
                 threshold=self._ps_threshold if proxy_result else None,
@@ -255,18 +266,15 @@ class Client(DaskDistributedClient):
             and self._ps_store is not None
         ):
             for future, *args in zip(futures, *iterables):
-                proxied_args_keys = [
-                    get_key(x) for x in args if isinstance(x, Proxy)
-                ]
                 # TODO: how to delete kwargs?
                 callback = partial(
                     _evict_proxies_callback,
-                    keys=proxied_args_keys,
+                    keys=_get_keys(args),
                     store=self._ps_store,
                 )
                 future.add_done_callback(callback)
 
-            if any(isinstance(x, Proxy) for x in kwargs.values()):
+            if any(_is_proxy(x) for x in kwargs.values()):
                 warnings.warn(
                     'A keyword argument to map() was proxied, but proxied '
                     'keyword arguments will not be automatically evicted. '
@@ -322,7 +330,7 @@ class Client(DaskDistributedClient):
                 key = f'{funcname(func)}-{tokenize(func, kwargs, *args)}-proxy'
                 pure = False
 
-            args = proxy_iterable(
+            args = _proxy_iterable(
                 args,
                 store=self._ps_store,
                 threshold=self._ps_threshold if proxy_args else None,
@@ -330,22 +338,17 @@ class Client(DaskDistributedClient):
                 # manually evict after the task future completes.
                 evict=False,
             )
-            proxied_args_keys.extend(
-                get_key(x) for x in args if isinstance(x, Proxy)
-            )
+            proxied_args_keys.extend(_get_keys(args))
 
-            kwargs = proxy_mapping(
+            kwargs = _proxy_mapping(
                 kwargs,
                 store=self._ps_store,
                 threshold=self._ps_threshold if proxy_args else None,
                 evict=False,
             )
-            proxied_args_keys.extend(
-                get_key(x) for x in kwargs.values() if isinstance(x, Proxy)
-            )
+            proxied_args_keys.extend(_get_keys(kwargs.values()))
 
-            # CHANGE WRAPPER TO NOT SERIALIZE STORE
-            func = proxy_task_wrapper(
+            func = _proxy_task_wrapper(
                 func,
                 store=self._ps_store,
                 threshold=self._ps_threshold if proxy_result else None,
@@ -386,11 +389,25 @@ def _evict_proxies_callback(
     keys: Iterable[ConnectorKeyT],
     store: Store[Any],
 ) -> None:
-    for key in keys:
+    for key in keys:  # pragma: no branch
         store.evict(key)
 
 
-def proxy_by_size(
+def _get_keys(iterable: Iterable[Any]) -> tuple[ConnectorKeyT, ...]:
+    if USE_TASK_SPEC:  # pragma: >3.9 cover
+        return tuple(x.key for x in iterable if isinstance(x, _ProxyNode))
+    else:  # pragma: <=3.9 cover
+        return tuple(x for x in iterable if isinstance(x, Proxy))
+
+
+def _is_proxy(obj: Any) -> bool:
+    if USE_TASK_SPEC:  # pragma: >3.9 cover
+        return isinstance(obj, (_ProxyNode, Proxy))
+    else:  # pragma: <=3.9 cover
+        return isinstance(obj, Proxy)
+
+
+def _proxy_by_size(
     x: T,
     store: Store[ConnectorT],
     threshold: int | None = None,
@@ -449,7 +466,7 @@ def proxy_by_size(
         return x
 
 
-def proxy_iterable(
+def _proxy_iterable(
     iterable: Iterable[Any],
     store: Store[ConnectorT],
     threshold: int | None = None,
@@ -468,8 +485,8 @@ def proxy_iterable(
         Tuple containing the objects yielded by the iterable with objects \
         larger than the threshold size replaced with proxies.
     """
-    return tuple(
-        proxy_by_size(
+    objects = tuple(
+        _proxy_by_size(
             value,
             store=store,
             threshold=threshold,
@@ -478,8 +495,16 @@ def proxy_iterable(
         for value in iterable
     )
 
+    if USE_TASK_SPEC:  # pragma: >3.9 cover
+        return tuple(
+            _ProxyNode(get_key(obj), obj) if isinstance(obj, Proxy) else obj
+            for obj in objects
+        )
+    else:  # pragma: <=3.9 cover
+        return objects
 
-def proxy_mapping(
+
+def _proxy_mapping(
     mapping: Mapping[T, Any],
     store: Store[ConnectorT],
     threshold: int | None = None,
@@ -498,8 +523,8 @@ def proxy_mapping(
         Mapping containing the same keys and values as the input mapping \
         but objects larger than the threshold size are replaced with proxies.
     """
-    return {
-        key: proxy_by_size(
+    objects = {
+        key: _proxy_by_size(
             mapping[key],
             store=store,
             threshold=threshold,
@@ -508,8 +533,18 @@ def proxy_mapping(
         for key in mapping
     }
 
+    if USE_TASK_SPEC:  # pragma: >3.9 cover
+        return {
+            key: _ProxyNode(get_key(obj), obj)
+            if isinstance(obj, Proxy)
+            else obj
+            for key, obj in objects.items()
+        }
+    else:  # pragma: <=3.9 cover
+        return objects
 
-def proxy_task_wrapper(
+
+def _proxy_task_wrapper(
     func: Callable[P, T],
     store: Store[ConnectorT],
     threshold: int | None = None,
@@ -539,7 +574,7 @@ def proxy_task_wrapper(
         # to capture the store variable. Rather, we capture the config
         # and retrieve the store based on the config.
         func_local_store = get_or_create_store(store_config)
-        proxy_or_result = proxy_by_size(
+        proxy_or_result = _proxy_by_size(
             result,
             store=func_local_store,
             threshold=threshold,

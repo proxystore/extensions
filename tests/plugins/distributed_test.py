@@ -9,11 +9,12 @@ from proxystore.proxy import Proxy
 from proxystore.store import Store
 from proxystore.store.utils import get_key
 
+from proxystore_ex.plugins.distributed import _is_proxy
+from proxystore_ex.plugins.distributed import _proxy_by_size
+from proxystore_ex.plugins.distributed import _proxy_iterable
+from proxystore_ex.plugins.distributed import _proxy_mapping
+from proxystore_ex.plugins.distributed import _proxy_task_wrapper
 from proxystore_ex.plugins.distributed import Client
-from proxystore_ex.plugins.distributed import proxy_by_size
-from proxystore_ex.plugins.distributed import proxy_iterable
-from proxystore_ex.plugins.distributed import proxy_mapping
-from proxystore_ex.plugins.distributed import proxy_task_wrapper
 
 
 def test_warn_unregistered_store() -> None:
@@ -149,7 +150,7 @@ def test_proxy_by_size() -> None:
     test_obj = 'foobar'
     with Store('test_proxy_by_size', LocalConnector(), register=True) as store:
         # threshold = None should be a no-op and return the input object
-        x = proxy_by_size(test_obj, store, None)
+        x = _proxy_by_size(test_obj, store, None)
         assert x == test_obj
 
         def _factory() -> str:
@@ -157,15 +158,15 @@ def test_proxy_by_size() -> None:
 
         # Passing a proxy should return the proxy
         p = Proxy(_factory)
-        x = proxy_by_size(p, store, 0)
+        x = _proxy_by_size(p, store, 0)
         assert x == p
 
         # Large threshold will not proxy object
-        x = proxy_by_size(test_obj, store, int(1e6))
+        x = _proxy_by_size(test_obj, store, int(1e6))
         assert x == test_obj
 
         # Object actually gets proxied here
-        x = proxy_by_size(test_obj, store, 0, evict=True)
+        x = _proxy_by_size(test_obj, store, 0, evict=True)
         assert isinstance(x, Proxy)
         # The target is already set by default
         del x.__proxy_target__
@@ -179,32 +180,32 @@ def test_proxy_iterable() -> None:
         LocalConnector(),
         register=True,
     ) as store:
-        assert proxy_iterable([], store, 0) == ()
+        assert _proxy_iterable([], store, 0) == ()
 
-        assert proxy_iterable([1, 2, 3], store, None) == (1, 2, 3)
+        assert _proxy_iterable([1, 2, 3], store, None) == (1, 2, 3)
 
-        x = proxy_iterable(['a', 'b', 'c'], store, 0)
-        assert all([isinstance(v, Proxy) for v in x])
+        x = _proxy_iterable(['a', 'b', 'c'], store, 0)
+        assert all([_is_proxy(v) for v in x])
 
         v = ['x' * 10, 'x']
-        x = proxy_iterable(v, store, 8)
-        assert isinstance(x[0], Proxy)
+        x = _proxy_iterable(v, store, 8)
+        assert _is_proxy(x[0])
         assert isinstance(x[1], str)
 
 
 def test_proxy_mapping() -> None:
     with Store('test_proxy_mapping', LocalConnector(), register=True) as store:
-        assert proxy_mapping({}, store, 0) == {}
+        assert _proxy_mapping({}, store, 0) == {}
 
         m = {'a': 1, 'b': 2}
-        assert proxy_mapping(m, store, None) == m
+        assert _proxy_mapping(m, store, None) == m
 
-        x = proxy_mapping({'a': 'a', 'b': 'b'}, store, 0)
-        assert all([isinstance(v, Proxy) for v in x.values()])
+        x = _proxy_mapping({'a': 'a', 'b': 'b'}, store, 0)
+        assert all([_is_proxy(v) for v in x.values()])
 
         v = {'a': 'x' * 10, 'b': 'x'}
-        x = proxy_mapping(v, store, 8)
-        assert isinstance(x['a'], Proxy)
+        x = _proxy_mapping(v, store, 8)
+        assert _is_proxy(x['a'])
         assert isinstance(x['b'], str)
 
 
@@ -223,7 +224,7 @@ def test_proxy_task_wrapper() -> None:
 
             return str(a) + b + str(c) + d
 
-        foo = proxy_task_wrapper(_foo, store, threshold=8, evict=True)
+        foo = _proxy_task_wrapper(_foo, store, threshold=8, evict=True)
 
         b = store.proxy('b' * 10, evict=True)
         d = store.proxy('d' * 10, evict=True)
@@ -247,6 +248,6 @@ def test_proxy_task_wrapper_standard() -> None:
         def _foo(x: int, *, y: int) -> int:
             return x * y
 
-        foo = proxy_task_wrapper(_foo, store)
+        foo = _proxy_task_wrapper(_foo, store)
 
         assert foo(2, y=3) == 6
