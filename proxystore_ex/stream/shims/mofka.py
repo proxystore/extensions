@@ -29,7 +29,6 @@ try:
     from mochi.mofka.client import MofkaDriver
     from mochi.mofka.client import AdaptiveBatchSize
     from mochi.mofka.client import Ordering
-    from pymargo.core import Engine
 
     mofka_import_error = None
 
@@ -47,20 +46,17 @@ class MofkaPublisher:
 
     # TODO: strip code of all of these and leave it to users to specify themselves
     # and just provide the driver.
-    def __init__(self, protocol: str, group_file: str) -> None:
+    def __init__(self, group_file: str) -> None:
         if mofka_import_error is not None:  # pragma: no cover
             raise mofka_import_error
 
-        self._engine = Engine(protocol, pymargo.core.server)
-        self._driver = MofkaDriver(group_file, self._engine)
+        self._driver = MofkaDriver(group_file)
 
     def close(self) -> None:
         """Close this publisher."""
         del self.producer
         del self._topic
         del self._driver
-        self._engine.finalize()
-        del self._engine
 
     def send_events(self, events: EventBatch) -> None:
         """Publish a message to the stream.
@@ -89,7 +85,7 @@ class MofkaPublisher:
             else:
                 self.producer.push(
                     metadata=json.dumps(event_to_dict(e)),
-                    data=cloudpickle.dumps(''),
+                    data=cloudpickle.dumps(""),
                 )
 
             # TODO: figure out how to properly batch in mofka
@@ -112,7 +108,6 @@ class MofkaSubscriber:
 
     def __init__(
         self,
-        protocol: str,
         group_file: str,
         topic_name: str,
         subscriber_name: str,
@@ -120,8 +115,7 @@ class MofkaSubscriber:
         if mofka_import_error is not None:  # pragma: no cover
             raise mofka_import_error
 
-        self._engine = Engine(protocol, pymargo.core.server)
-        self._driver = MofkaDriver(group_file, self._engine)
+        self._driver = MofkaDriver(group_file)
         self._topic = self._driver.open_topic(topic_name)
         self.consumer = self._topic.consumer(
             name=subscriber_name,
@@ -191,5 +185,3 @@ class MofkaSubscriber:
         del self.consumer
         del self._topic
         del self._driver
-        self._engine.finalize()
-        del self._engine
