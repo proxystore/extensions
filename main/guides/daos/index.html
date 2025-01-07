@@ -1381,7 +1381,7 @@ can be anything you want.</p>
 <h2 id="create-a-connector">Create a Connector<a class="headerlink" href="#create-a-connector" title="Permanent link">&para;</a></h2>
 <p>Creating a <a class="autorefs autorefs-internal" href="../../api/connectors/daos/#proxystore_ex.connectors.daos.DAOSConnector"><code>DAOSConnector</code></a>
 is simple.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">proxystore_ex.connectors.daos</span> <span class="kn">import</span> <span class="n">DAOSConnector</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">proxystore_ex.connectors.daos</span><span class="w"> </span><span class="kn">import</span> <span class="n">DAOSConnector</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">with</span> <span class="n">DAOSConnector</span><span class="p">(</span>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">pool</span><span class="o">=...</span><span class="p">,</span>
@@ -1405,8 +1405,8 @@ on the same container.</p>
 to initialize a ProxyStore <a class="autorefs autorefs-external" href="https://docs.proxystore.dev/main/api/store/base/#proxystore.store.base.Store"><code>Store</code></a>.
 Learn more about the <a class="autorefs autorefs-external" href="https://docs.proxystore.dev/main/api/store/base/#proxystore.store.base.Store"><code>Store</code></a> interface in the
 <a href="https://docs.proxystore.dev/main/get-started/">Get Started</a> guide.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">proxystore.store</span> <span class="kn">import</span> <span class="n">Store</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span> <span class="nn">proxystore_ex.connectors.daos</span> <span class="kn">import</span> <span class="n">DAOSConnector</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">proxystore.store</span><span class="w"> </span><span class="kn">import</span> <span class="n">Store</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">proxystore_ex.connectors.daos</span><span class="w"> </span><span class="kn">import</span> <span class="n">DAOSConnector</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">connector</span> <span class="o">=</span> <span class="n">DAOSConnector</span>
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="n">pool</span><span class="o">=...</span><span class="p">,</span>
