@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import sys
-from typing import Generator
+from collections.abc import Generator
 
 try:
     import pydaos

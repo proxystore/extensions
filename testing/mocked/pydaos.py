@@ -10,10 +10,9 @@ https://github.com/daos-stack/daos/blob/release/2.4/src/client/pydaos/pydaos_cor
 
 from __future__ import annotations
 
+from collections.abc import Generator
 from typing import Any
 from typing import cast
-from typing import Dict
-from typing import Generator
 
 
 class DObjNotFound(Exception):  # noqa: N818
@@ -167,12 +166,12 @@ class DDict(_DObj):
         """Bulk get values from the dictionary."""
         if d is None:
             return None
-        d_ = cast(Dict[str, bytes | None], d)
+        d_ = cast(dict[str, bytes | None], d)
         if value_size is None:
             value_size = self.value_size
         for k in d_:
             d_[k] = self.get(k)
-        d__ = cast(Dict[str, bytes], d_)
+        d__ = cast(dict[str, bytes], d_)
         return d__
 
     def bput(self, d: dict[str, bytes | None] | None) -> None:
