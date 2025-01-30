@@ -11,9 +11,9 @@ import socket
 import sys
 import time
 import uuid
+from collections.abc import Sequence
 from types import TracebackType
 from typing import Any
-from typing import Sequence
 
 if sys.version_info >= (3, 11):  # pragma: >=3.11 cover
     from typing import Self

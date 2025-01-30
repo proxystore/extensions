@@ -14,11 +14,11 @@ jobs:
     strategy:
       matrix:
         include:
-          - toxenv: py38-dim
           - toxenv: py39-dim
           - toxenv: py310-dim
           - toxenv: py311-dim
           - toxenv: py312-dim
+          - toxenv: py313-dim
 
     runs-on: ubuntu-latest
 

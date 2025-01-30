@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import uuid
-from typing import Generator
+from collections.abc import Generator
 from unittest import mock
 
 import pytest
@@ -14,9 +14,12 @@ from testing.mocked.pydaos import DDict as MockDDict
 
 @pytest.fixture
 def connector() -> Generator[DAOSConnector, None, None]:
-    with mock.patch('pydaos.DCont', MockDCont), mock.patch(
-        'pydaos.DDict',
-        MockDDict,
+    with (
+        mock.patch('pydaos.DCont', MockDCont),
+        mock.patch(
+            'pydaos.DDict',
+            MockDDict,
+        ),
     ):
         with DAOSConnector(
             pool=str(uuid.uuid4()),

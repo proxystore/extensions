@@ -35,12 +35,15 @@ TEST_KEY = DIMKey(
 
 @pytest.mark.asyncio
 async def test_connector_spawns_server() -> None:
-    with mock.patch(
-        'proxystore_ex.connectors.dim.ucx.wait_for_server',
-        side_effect=ServerTimeoutError,
-    ), mock.patch(
-        'proxystore_ex.connectors.dim.ucx.spawn_server',
-    ) as mock_spawn_server:
+    with (
+        mock.patch(
+            'proxystore_ex.connectors.dim.ucx.wait_for_server',
+            side_effect=ServerTimeoutError,
+        ),
+        mock.patch(
+            'proxystore_ex.connectors.dim.ucx.spawn_server',
+        ) as mock_spawn_server,
+    ):
         with UCXConnector(port=0):
             pass
         mock_spawn_server.assert_called_once()
@@ -55,11 +58,14 @@ def test_connector_raises_rpc_error() -> None:
             r = RPCResponse('exists', TEST_KEY, exception=Exception('test'))
             return serialize(r)
 
-    with mock.patch(
-        'proxystore_ex.connectors.dim.ucx.wait_for_server',
-    ), mock.patch(
-        'ucp.create_endpoint',
-        AsyncMock(return_value=MockEndpoint()),
+    with (
+        mock.patch(
+            'proxystore_ex.connectors.dim.ucx.wait_for_server',
+        ),
+        mock.patch(
+            'ucp.create_endpoint',
+            AsyncMock(return_value=MockEndpoint()),
+        ),
     ):
         with UCXConnector(port=0) as connector:
             with pytest.raises(Exception, match='test'):
@@ -174,13 +180,16 @@ async def test_run_server() -> None:  # pragma: no cover
     future = loop.create_future()
     future.set_result(None)
 
-    with mock.patch.object(
-        loop,
-        'create_future',
-        return_value=future,
-    ), mock.patch(
-        'proxystore_ex.connectors.dim.ucx.reset_ucp_async',
-        AsyncMock(),
+    with (
+        mock.patch.object(
+            loop,
+            'create_future',
+            return_value=future,
+        ),
+        mock.patch(
+            'proxystore_ex.connectors.dim.ucx.reset_ucp_async',
+            AsyncMock(),
+        ),
     ):
         await run_server(0)
 
@@ -190,9 +199,13 @@ async def test_run_server() -> None:  # pragma: no cover
     reason='Only compatible with mocked UCP module.',
 )
 def test_mocked_spawn_server() -> None:
-    with mock_multiprocessing(), mock.patch(
-        'proxystore_ex.connectors.dim.ucx.wait_for_server',
-    ), mock.patch('atexit.register') as mock_register:
+    with (
+        mock_multiprocessing(),
+        mock.patch(
+            'proxystore_ex.connectors.dim.ucx.wait_for_server',
+        ),
+        mock.patch('atexit.register') as mock_register,
+    ):
         spawn_server('localhost', 0)
         mock_register.assert_called_once()
 

@@ -38,17 +38,22 @@ MARGO_SPEC = importlib.util.find_spec('pymargo')
 
 
 def test_connector_spawns_server() -> None:
-    with mock.patch(
-        'proxystore_ex.connectors.dim.margo.wait_for_server',
-        side_effect=ServerTimeoutError,
-    ), mock.patch(
-        'proxystore_ex.connectors.dim.margo.Engine.lookup',
-    ), mock.patch(
-        'proxystore_ex.connectors.dim.margo.Engine.addr',
-        return_value='tcp://127.0.0.1:0',
-    ), mock.patch(
-        'proxystore_ex.connectors.dim.margo.spawn_server',
-    ) as mock_spawn_server:
+    with (
+        mock.patch(
+            'proxystore_ex.connectors.dim.margo.wait_for_server',
+            side_effect=ServerTimeoutError,
+        ),
+        mock.patch(
+            'proxystore_ex.connectors.dim.margo.Engine.lookup',
+        ),
+        mock.patch(
+            'proxystore_ex.connectors.dim.margo.Engine.addr',
+            return_value='tcp://127.0.0.1:0',
+        ),
+        mock.patch(
+            'proxystore_ex.connectors.dim.margo.spawn_server',
+        ) as mock_spawn_server,
+    ):
         with MargoConnector(protocol='tcp', port=0):
             pass
         mock_spawn_server.assert_called_once()
@@ -103,24 +108,31 @@ def test_handle_server_error_responses() -> None:
 
     # Only testing client side behavior so mock as successful connection
     # to an existing server
-    with mock.patch(
-        'proxystore_ex.connectors.dim.margo.wait_for_server',
-    ), mock.patch(
-        'proxystore_ex.connectors.dim.margo.Engine.lookup',
-    ), mock.patch(
-        'proxystore_ex.connectors.dim.margo.Engine.addr',
-        return_value='tcp://127.0.0.1:0',
+    with (
+        mock.patch(
+            'proxystore_ex.connectors.dim.margo.wait_for_server',
+        ),
+        mock.patch(
+            'proxystore_ex.connectors.dim.margo.Engine.lookup',
+        ),
+        mock.patch(
+            'proxystore_ex.connectors.dim.margo.Engine.addr',
+            return_value='tcp://127.0.0.1:0',
+        ),
     ):
         connector = MargoConnector(
             protocol='tcp',
             port=0,
         )
 
-    with mock.patch.object(
-        connector._rpcs['exists'],
-        'on',
-        return_value=_CallableRemoteFunction(),
-    ), mock.patch.object(connector.engine, 'lookup'):
+    with (
+        mock.patch.object(
+            connector._rpcs['exists'],
+            'on',
+            return_value=_CallableRemoteFunction(),
+        ),
+        mock.patch.object(connector.engine, 'lookup'),
+    ):
         with pytest.raises(RuntimeError, match='xyz'):
             connector._send_rpcs([rpc])
 
@@ -188,9 +200,13 @@ def test_mocked_margo_server() -> None:
     reason='Only compatible with mocked Margo module.',
 )
 def test_mocked_spawn_server() -> None:
-    with mock_multiprocessing(), mock.patch(
-        'proxystore_ex.connectors.dim.margo.wait_for_server',
-    ), mock.patch('atexit.register') as mock_register:
+    with (
+        mock_multiprocessing(),
+        mock.patch(
+            'proxystore_ex.connectors.dim.margo.wait_for_server',
+        ),
+        mock.patch('atexit.register') as mock_register,
+    ):
         spawn_server('tcp', '127.0.0.1', 0)
         mock_register.assert_called_once()
 

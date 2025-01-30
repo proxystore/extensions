@@ -3,10 +3,10 @@ from __future__ import annotations
 import contextlib
 import importlib.util
 import platform
+from collections.abc import Generator
+from contextlib import AbstractContextManager
 from typing import Any
 from typing import Callable
-from typing import ContextManager
-from typing import Generator
 from unittest import mock
 
 import pytest
@@ -32,9 +32,12 @@ FIXTURE_LIST = [
 @pytest.fixture(scope='session')
 def daos_connector() -> Generator[Connector[Any], None, None]:
     """Mocked DAOS connector fixture."""
-    with mock.patch('pydaos.DCont', MockDCont), mock.patch(
-        'pydaos.DDict',
-        MockDDict,
+    with (
+        mock.patch('pydaos.DCont', MockDCont),
+        mock.patch(
+            'pydaos.DDict',
+            MockDDict,
+        ),
     ):
         connector = DAOSConnector(
             pool='test-pool',
@@ -55,7 +58,7 @@ def margo_connector() -> Generator[Connector[Any], None, None]:
 
     margo_spec = importlib.util.find_spec('pymargo')
 
-    ctx: Callable[[], ContextManager[None]] = contextlib.nullcontext
+    ctx: Callable[[], AbstractContextManager[None]] = contextlib.nullcontext
     timeout = 1.0
     if (  # pragma: no branch
         margo_spec is not None and 'mocked' in margo_spec.name
@@ -84,7 +87,7 @@ def ucx_connector() -> Generator[Connector[Any], None, None]:
 
     ucp_spec = importlib.util.find_spec('ucp')
 
-    ctx: Callable[[], ContextManager[None]] = contextlib.nullcontext
+    ctx: Callable[[], AbstractContextManager[None]] = contextlib.nullcontext
     if ucp_spec is not None and 'mocked' in ucp_spec.name:  # pragma: no branch
         ctx = mock_multiprocessing
 
