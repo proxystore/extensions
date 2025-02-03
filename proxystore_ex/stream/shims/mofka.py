@@ -50,12 +50,15 @@ class MofkaPublisher:
         if mofka_import_error is not None:  # pragma: no cover
             raise mofka_import_error
 
-        self._driver = MofkaDriver(group_file)
+        self._driver = MofkaDriver(group_file, use_progress_thread=True)
+        self._topics = {}
+        self._producers = {}
 
     def close(self) -> None:
         """Close this publisher."""
         del self.producer
-        del self._topic
+        del self._topics
+        del self._producers
         del self._driver
 
     def send_events(self, events: EventBatch) -> None:
@@ -70,26 +73,33 @@ class MofkaPublisher:
         batch_size = AdaptiveBatchSize
         ordering = Ordering.Strict
 
-        self._topic = self._driver.open_topic(topic)
-        self.producer = self._topic.producer(
-            batch_size=batch_size,
-            ordering=ordering,
-        )
+        if topic not in self._topics.keys():
+            open_topic = self._driver.open_topic(topic)
+
+            producer = self._topic.producer(
+                batch_size=batch_size,
+                ordering=ordering,
+            )
+            self._topics[topic] = open_topic
+            self._producers[topic] = producer
+
+        else:
+            producer = self._producers[topic]
+
+        # TODO: figure out how to properly batch in mofka
+        self.producer.flush()
 
         for e in events.events:
             if isinstance(e, NewObjectEvent):
-                self.producer.push(
-                    metadata=json.dumps(e.metadata),
+                producer.push(
+                    metadata=e.metadata,
                     data=cloudpickle.dumps(e.obj),
                 )
             else:
-                self.producer.push(
-                    metadata=json.dumps(event_to_dict(e)),
-                    data=cloudpickle.dumps(""),
+                producer.push(
+                    metadata=event_to_dict(e),
+                    data=cloudpickle.dumps(''),
                 )
-
-            # TODO: figure out how to properly batch in mofka
-            self.producer.flush()
 
 
 class MofkaSubscriber:
@@ -115,7 +125,7 @@ class MofkaSubscriber:
         if mofka_import_error is not None:  # pragma: no cover
             raise mofka_import_error
 
-        self._driver = MofkaDriver(group_file)
+        self._driver = MofkaDriver(group_file, use_progress_thread=True)
         self._topic = self._driver.open_topic(topic_name)
         self.consumer = self._topic.consumer(
             name=subscriber_name,
