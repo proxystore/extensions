@@ -10,6 +10,7 @@ from __future__ import annotations
 import cloudpickle
 import json
 import sys
+import logging
 
 if sys.version_info >= (3, 11):  # pragma: >=3.11 cover
     from typing import Self
@@ -36,6 +37,9 @@ except ImportError as e:  # pragma: no cover
     mofka_import_error = e
 
 
+logger = logging.getLogger(__name__)
+
+
 class MofkaPublisher:
     """Mofka publisher shim.
 
@@ -50,12 +54,14 @@ class MofkaPublisher:
         if mofka_import_error is not None:  # pragma: no cover
             raise mofka_import_error
 
+        logger.info('Mofka driver created in Producer')
         self._driver = MofkaDriver(group_file, use_progress_thread=True)
         self._topics = {}
         self._producers = {}
 
     def close(self) -> None:
         """Close this publisher."""
+        logger.info('Closing publisher')
         del self.producer
         del self._topics
         del self._producers
@@ -68,6 +74,8 @@ class MofkaPublisher:
             topic: Stream topic to publish message to.
             message: Message as bytes to publish to the stream.
         """
+
+        logger.info('Pushing events to topic')
 
         topic = events.topic
         batch_size = AdaptiveBatchSize
@@ -101,6 +109,8 @@ class MofkaPublisher:
                     data=cloudpickle.dumps(''),
                 )
 
+        logger.info('Event push completed')
+
 
 class MofkaSubscriber:
     """Mofka subscriber shim.
@@ -125,6 +135,7 @@ class MofkaSubscriber:
         if mofka_import_error is not None:  # pragma: no cover
             raise mofka_import_error
 
+        logger.info('Mofka driver created in subscriber')
         self._driver = MofkaDriver(group_file, use_progress_thread=True)
         self._topic = self._driver.open_topic(topic_name)
         self.consumer = self._topic.consumer(
@@ -178,6 +189,9 @@ class MofkaSubscriber:
     def next_events(self) -> EventBatch:
         metadata: EndOfStreamEvent | NewObjectKeyEvent | NewObjectEvent
 
+        logger.info(
+            f'Mofka subscriber listening for messages in topic {self.topic}'
+        )
         events = self.consumer.pull().wait()
         data = cloudpickle.loads(events.data[0])
 
