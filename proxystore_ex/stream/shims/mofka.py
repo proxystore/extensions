@@ -190,7 +190,7 @@ class MofkaSubscriber:
         metadata: EndOfStreamEvent | NewObjectKeyEvent | NewObjectEvent
 
         logger.info(
-            f'Mofka subscriber listening for messages in topic {self.topic}'
+            f'Mofka subscriber listening for messages in topic {self._topic}'
         )
         events = self.consumer.pull().wait()
         data = cloudpickle.loads(events.data[0])
