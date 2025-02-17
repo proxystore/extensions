@@ -37,7 +37,7 @@ except ImportError as e:  # pragma: no cover
     mofka_import_error = e
 
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("main")
 
 
 class MofkaStreamDriver:
