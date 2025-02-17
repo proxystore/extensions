@@ -51,9 +51,13 @@ class MofkaStreamDriver:
 
     _instances = {}
 
-    def __new__(cls, class_name: str):
+    def __new__(cls, class_name: str, *args, **kwargs):
         if class_name not in cls._instances:
-            cls._instances[class_name] = super(MofkaStreamDriver, cls).__new__(cls)
+            cls._instances[class_name] = super(MofkaStreamDriver, cls).__new__(
+                cls,
+                *args,
+                **kwargs,
+            )
         return cls._instances[class_name]
 
     def __init__(self, group_file: str):
