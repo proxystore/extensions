@@ -56,10 +56,10 @@ class MofkaStreamDriver:
             cls._instances[group_file] = super(MofkaStreamDriver, cls).__new__(
                 cls,
             )
+            cls._instances[group_file].driver = MofkaDriver(
+                group_file=group_file, use_progress_thread=True
+            )
         return cls._instances[group_file]
-
-    def __init__(self, group_file: str):
-        self.driver = MofkaDriver(group_file=group_file, use_progress_thread=True)
 
 
 class MofkaPublisher:
