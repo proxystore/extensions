@@ -56,7 +56,7 @@ class MofkaStreamDriver:
     _instances = {}
 
     def __new__(cls, group_file):
-        p_tup = (os.getpid, group_file)
+        p_tup = (os.getpid(), group_file)
         if p_tup not in cls._instances:
             cls._instances[p_tup] = super(MofkaStreamDriver, cls).__new__(
                 cls,
