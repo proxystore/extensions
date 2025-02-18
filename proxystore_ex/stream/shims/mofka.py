@@ -26,10 +26,13 @@ from proxystore.stream.events import NewObjectKeyEvent
 
 try:
     import pymargo.core
-    from mochi.mofka.client import DataDescriptor
-    from mochi.mofka.client import MofkaDriver
     from mochi.mofka.client import AdaptiveBatchSize
+    from mochi.mofka.client import ByteArrayAllocator
+    from mochi.mofka.client import DataDescriptor
+    from mochi.mofka.client import FullDataSelector
+    from mochi.mofka.client import MofkaDriver
     from mochi.mofka.client import Ordering
+    from mochi.mofka.client import ThreadPool
 
     mofka_import_error = None
 
@@ -37,7 +40,7 @@ except ImportError as e:  # pragma: no cover
     mofka_import_error = e
 
 
-logger = logging.getLogger("main")
+logger = logging.getLogger(__name__)
 
 
 class MofkaStreamDriver:
@@ -159,8 +162,9 @@ class MofkaSubscriber:
         self._topic = self._driver.open_topic(topic_name)
         self.consumer = self._topic.consumer(
             name=subscriber_name,
-            data_selector=self.data_selector,
-            data_broker=self.data_broker,
+            data_selector=FullDataSelector(),
+            data_broker=ByteArrayAllocator(),
+            thread_pool=ThreadPool(1),
         )
 
     @staticmethod
