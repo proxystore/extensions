@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import cloudpickle
 import json
+import os
 import sys
 import logging
 
@@ -55,14 +56,15 @@ class MofkaStreamDriver:
     _instances = {}
 
     def __new__(cls, group_file):
-        if group_file not in cls._instances:
-            cls._instances[group_file] = super(MofkaStreamDriver, cls).__new__(
+        p_tup = (os.getpid, group_file)
+        if p_tup not in cls._instances:
+            cls._instances[p_tup] = super(MofkaStreamDriver, cls).__new__(
                 cls,
             )
-            cls._instances[group_file].driver = MofkaDriver(
+            cls._instances[p_tup].driver = MofkaDriver(
                 group_file=group_file, use_progress_thread=True
             )
-        return cls._instances[group_file]
+        return cls._instances[p_tup]
 
 
 class MofkaPublisher:
