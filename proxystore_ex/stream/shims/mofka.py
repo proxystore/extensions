@@ -53,17 +53,15 @@ class MofkaStreamDriver(MofkaDriver):
         group_file: Bedrock generated group file.
     """
 
-    _pid = None
-    _instance = None
+    _instances = {}
 
     def __new__(cls, group_file):
         curr_pid = os.getpid()
-        if cls._pid is None or curr_pid != cls._pid:
-            cls._pid = curr_pid
-            cls._instance = super(MofkaStreamDriver, cls).__new__(
+        if curr_pid not in cls._instances:
+            cls._instances[curr_pid] = super(MofkaStreamDriver, cls).__new__(
                 cls, group_file=group_file, use_progress_thread=True
             )
-        return cls._instance
+        return cls._instances[curr_pid]
 
 
 class MofkaPublisher:
