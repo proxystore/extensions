@@ -111,6 +111,7 @@ class MofkaPublisher:
             producer = open_topic.producer(
                 batch_size=batch_size,
                 ordering=ordering,
+                thread_pool=ThreadPool(1),
             )
             self._topics[topic] = open_topic
             self._producers[topic] = producer
