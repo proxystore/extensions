@@ -80,7 +80,7 @@ class MofkaPublisher:
             raise mofka_import_error
 
         logger.info("Mofka driver created in Producer")
-        self._driver = MofkaStreamDriver(group_file=group_file).driver
+        self._driver = MofkaStreamDriver(group_file=group_file)
         self._topics: dict = {}
         self._producers: dict = {}
 
@@ -159,7 +159,7 @@ class MofkaSubscriber:
             raise mofka_import_error
 
         logger.info("Mofka driver created in subscriber")
-        self._driver = MofkaStreamDriver(group_file=group_file).driver
+        self._driver = MofkaStreamDriver(group_file=group_file)
         self._topic = self._driver.open_topic(topic_name)
         self.consumer = self._topic.consumer(
             name=subscriber_name,
