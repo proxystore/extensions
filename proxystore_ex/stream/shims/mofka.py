@@ -44,7 +44,7 @@ except ImportError as e:  # pragma: no cover
 logger = logging.getLogger(__name__)
 
 
-class MofkaStreamDriver:
+class MofkaStreamDriver(MofkaDriver):
     """Singleton class for the Mofka Driver.
 
     There can only be one driver per process leading to the need for this singleton.
@@ -53,18 +53,17 @@ class MofkaStreamDriver:
         group_file: Bedrock generated group file.
     """
 
-    _instances = {}
+    _pid = None
+    _instance = None
 
     def __new__(cls, group_file):
-        p_tup = (os.getpid(), group_file)
-        if p_tup not in cls._instances:
-            cls._instances[p_tup] = super(MofkaStreamDriver, cls).__new__(
-                cls,
+        curr_pid = os.getpid()
+        if cls._pid is None or curr_pid != cls._pid:
+            cls._pid = curr_pid
+            cls._instance = super(MofkaStreamDriver, cls).__new__(
+                cls, group_file=group_file, use_progress_thread=True
             )
-            cls._instances[p_tup].driver = MofkaDriver(
-                group_file=group_file, use_progress_thread=True
-            )
-        return cls._instances[p_tup]
+        return cls._instance
 
 
 class MofkaPublisher:
@@ -166,7 +165,7 @@ class MofkaSubscriber:
             name=subscriber_name,
             data_selector=FullDataSelector,
             data_broker=ByteArrayAllocator,
-            thread_pool=ThreadPool(1),
+            thread_pool=ThreadPool(0),
         )
 
     @staticmethod
