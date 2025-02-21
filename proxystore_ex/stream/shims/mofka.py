@@ -59,9 +59,8 @@ class MofkaStreamDriver(MofkaDriver):
             cls._instance = super(MofkaStreamDriver, cls).__new__(
                 cls, group_file=group_file, use_progress_thread=False
             )
-        driver = cls._instance
-        driver.start_progress_thread()
-        return driver
+            cls._instance.start_progress_thread()
+        return cls._instance
 
 
 class MofkaPublisher:
