@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import cloudpickle
 import json
-import os
 import sys
 import logging
 
@@ -53,15 +52,16 @@ class MofkaStreamDriver(MofkaDriver):
         group_file: Bedrock generated group file.
     """
 
-    _instances = {}
+    _instance = None
 
     def __new__(cls, group_file):
-        curr_pid = os.getpid()
-        if curr_pid not in cls._instances:
-            cls._instances[curr_pid] = super(MofkaStreamDriver, cls).__new__(
-                cls, group_file=group_file, use_progress_thread=True
+        if cls._instance is None:
+            cls._instance = super(MofkaStreamDriver, cls).__new__(
+                cls, group_file=group_file, use_progress_thread=False
             )
-        return cls._instances[curr_pid]
+        driver = cls._instance
+        driver.start_progress_thread()
+        return driver
 
 
 class MofkaPublisher:
