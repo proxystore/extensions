@@ -57,7 +57,7 @@ class MofkaStreamDriver(MofkaDriver):
     def __new__(cls, group_file):
         if cls._instance is None:
             cls._instance = super(MofkaStreamDriver, cls).__new__(
-                cls, group_file=group_file, use_progress_thread=False
+                cls, group_file=group_file, use_progress_thread=True
             )
         return cls._instance
 
@@ -75,14 +75,14 @@ class MofkaPublisher:
         if mofka_import_error is not None:  # pragma: no cover
             raise mofka_import_error
 
-        logger.info('Mofka driver created in Producer')
+        logger.info("Mofka driver created in Producer")
         self._driver = MofkaStreamDriver(group_file=group_file)
         self._topics: dict = {}
         self._producers: dict = {}
 
     def close(self) -> None:
         """Close this publisher."""
-        logger.info('Closing publisher')
+        logger.info("Closing publisher")
         del self._topics
         del self._producers
         del self._driver
@@ -95,7 +95,7 @@ class MofkaPublisher:
             message: Message as bytes to publish to the stream.
         """
 
-        logger.info('Pushing events to topic')
+        logger.info("Pushing events to topic")
 
         topic = events.topic
         batch_size = AdaptiveBatchSize
@@ -127,10 +127,10 @@ class MofkaPublisher:
             else:
                 producer.push(
                     metadata=event_to_dict(e),
-                    data=cloudpickle.dumps(''),
+                    data=cloudpickle.dumps(""),
                 )
 
-        logger.info('Event push completed')
+        logger.info("Event push completed")
 
 
 class MofkaSubscriber:
@@ -155,7 +155,7 @@ class MofkaSubscriber:
         if mofka_import_error is not None:  # pragma: no cover
             raise mofka_import_error
 
-        logger.info('Mofka driver created in subscriber')
+        logger.info("Mofka driver created in subscriber")
         self._driver = MofkaStreamDriver(group_file=group_file)
         self._topic = self._driver.open_topic(topic_name)
         self.consumer = self._topic.consumer(
@@ -210,9 +210,7 @@ class MofkaSubscriber:
     def next_events(self) -> EventBatch:
         metadata: EndOfStreamEvent | NewObjectKeyEvent | NewObjectEvent
 
-        logger.info(
-            f'Mofka subscriber listening for messages in topic {self._topic}'
-        )
+        logger.info(f"Mofka subscriber listening for messages in topic {self._topic}")
         events = self.consumer.pull().wait()
         data = cloudpickle.loads(events.data[0])
 
