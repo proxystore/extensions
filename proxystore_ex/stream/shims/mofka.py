@@ -160,8 +160,6 @@ class MofkaSubscriber:
         self._topic = self._driver.open_topic(topic_name)
         self.consumer = self._topic.consumer(
             name=subscriber_name,
-            data_selector=FullDataSelector,
-            data_broker=ByteArrayAllocator,
             thread_pool=ThreadPool(0),
         )
 
