@@ -60,9 +60,7 @@ class Singleton(type):
         if cls._instance is None:
             with cls._lock:
                 if cls._instance is None:
-                    cls._instance = super(Singleton, cls).__call__(
-                        *args, **kwargs
-                    )
+                    cls._instance = super(Singleton, cls).__call__(*args, **kwargs)
                     cls._instance.driver = MofkaDriver(*args, **kwargs)
         return cls._instance
 
@@ -87,7 +85,7 @@ class MofkaPublisher:
         if mofka_import_error is not None:  # pragma: no cover
             raise mofka_import_error
 
-        logger.info('Mofka driver created in Producer')
+        logger.info("Mofka driver created in Producer")
         self._driver = MofkaStreamDriver(
             group_file=group_file, use_progress_thread=True
         ).driver
@@ -96,7 +94,7 @@ class MofkaPublisher:
 
     def close(self) -> None:
         """Close this publisher."""
-        logger.info('Closing publisher')
+        logger.info("Closing publisher")
         del self._topics
         del self._producers
         del self._driver
@@ -109,7 +107,7 @@ class MofkaPublisher:
             message: Message as bytes to publish to the stream.
         """
 
-        logger.info('Pushing events to topic')
+        logger.info("Pushing events to topic")
 
         topic = events.topic
         batch_size = AdaptiveBatchSize
@@ -129,9 +127,6 @@ class MofkaPublisher:
         else:
             producer = self._producers[topic]
 
-        # TODO: figure out how to properly batch in mofka
-        producer.flush()
-
         for e in events.events:
             if isinstance(e, NewObjectEvent):
                 producer.push(
@@ -141,10 +136,12 @@ class MofkaPublisher:
             else:
                 producer.push(
                     metadata=event_to_dict(e),
-                    data=cloudpickle.dumps(''),
+                    data=cloudpickle.dumps(""),
                 )
 
-        logger.info('Event push completed')
+        # TODO: figure out how to properly batch in mofka
+        producer.flush()
+        logger.info("Event push completed")
 
 
 class MofkaSubscriber:
@@ -169,7 +166,7 @@ class MofkaSubscriber:
         if mofka_import_error is not None:  # pragma: no cover
             raise mofka_import_error
 
-        logger.info('Mofka driver created in subscriber')
+        logger.info("Mofka driver created in subscriber")
         self._driver = MofkaStreamDriver(
             group_file=group_file, use_progress_thread=True
         ).driver
@@ -224,9 +221,7 @@ class MofkaSubscriber:
     def next_events(self) -> EventBatch:
         metadata: EndOfStreamEvent | NewObjectKeyEvent | NewObjectEvent
 
-        logger.info(
-            f'Mofka subscriber listening for messages in topic {self._topic}'
-        )
+        logger.info(f"Mofka subscriber listening for messages")
         events = self.consumer.pull().wait()
         data = cloudpickle.loads(events.data[0])
 
