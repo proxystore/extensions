@@ -44,7 +44,7 @@ except ImportError as e:  # pragma: no cover
 logger = logging.getLogger(__name__)
 
 
-class MofkaSingleton(MofkaDriver):
+class Singleton(type):
     """Singleton class for the Mofka Driver.
 
     There can only be one driver per process leading to the need for this singleton.
@@ -56,17 +56,15 @@ class MofkaSingleton(MofkaDriver):
     _instance = None
     _lock = threading.Lock()
 
-    def __call__(cls, group_file):
+    def __call__(cls, *args, **kwargs):
         if cls._instance is None:
             with cls._lock:
                 if cls._instance is None:
-                    cls._instance = super(MofkaSingleton, cls).__call__(
-                        cls, group_file=group_file, use_progress_thread=True
-                    )
+                    cls._instance = super(Singleton, cls).__call__(*args, **kwargs)
         return cls._instance
 
 
-class MofkaStreamDriver(metaclass=MofkaSingleton):
+class MofkaStreamDriver(MofkaDriver, metaclass=Singleton):
     pass
 
 
@@ -84,7 +82,9 @@ class MofkaPublisher:
             raise mofka_import_error
 
         logger.info("Mofka driver created in Producer")
-        self._driver = MofkaStreamDriver(group_file=group_file)
+        self._driver = MofkaStreamDriver(
+            group_file=group_file, use_progress_thread=True
+        )
         self._topics: dict = {}
         self._producers: dict = {}
 
@@ -164,7 +164,9 @@ class MofkaSubscriber:
             raise mofka_import_error
 
         logger.info("Mofka driver created in subscriber")
-        self._driver = MofkaStreamDriver(group_file=group_file)
+        self._driver = MofkaStreamDriver(
+            group_file=group_file, use_progress_thread=True
+        )
         self._topic = self._driver.open_topic(topic_name)
         self.consumer = self._topic.consumer(
             name=subscriber_name,
