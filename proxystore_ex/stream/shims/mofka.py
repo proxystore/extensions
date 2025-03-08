@@ -8,9 +8,10 @@ package.
 from __future__ import annotations
 
 import cloudpickle
+import logging
 import json
 import sys
-import logging
+import threading
 
 if sys.version_info >= (3, 11):  # pragma: >=3.11 cover
     from typing import Self
@@ -43,7 +44,7 @@ except ImportError as e:  # pragma: no cover
 logger = logging.getLogger(__name__)
 
 
-class MofkaStreamDriver(MofkaDriver):
+class MofkaSingleton(MofkaDriver):
     """Singleton class for the Mofka Driver.
 
     There can only be one driver per process leading to the need for this singleton.
@@ -53,13 +54,20 @@ class MofkaStreamDriver(MofkaDriver):
     """
 
     _instance = None
+    _lock = threading.Lock()
 
-    def __new__(cls, group_file):
+    def __call__(cls, group_file):
         if cls._instance is None:
-            cls._instance = super(MofkaStreamDriver, cls).__new__(
-                cls, group_file=group_file, use_progress_thread=True
-            )
+            with cls._lock:
+                if cls._instance is None:
+                    cls._instance = super(MofkaSingleton, cls).__call__(
+                        cls, group_file=group_file, use_progress_thread=True
+                    )
         return cls._instance
+
+
+class MofkaStreamDriver(metaclass=MofkaSingleton):
+    pass
 
 
 class MofkaPublisher:
