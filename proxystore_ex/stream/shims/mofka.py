@@ -44,7 +44,7 @@ except ImportError as e:  # pragma: no cover
 logger = logging.getLogger(__name__)
 
 
-class Singleton(type):
+class Singleton(MofkaDriver):
     """Singleton class for the Mofka Driver.
 
     There can only be one driver per process leading to the need for this singleton.
@@ -64,8 +64,10 @@ class Singleton(type):
         return cls._instance
 
 
-class MofkaStreamDriver(MofkaDriver, metaclass=Singleton):
-    pass
+class MofkaStreamDriver(metaclass=Singleton):
+
+    def __init__(self, group_file, use_progress_thread=True):
+        return super().__init__(self, group_file, use_progress_thread)
 
 
 class MofkaPublisher:
