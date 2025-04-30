@@ -2,90 +2,90 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://extensions.proxystore.dev/latest/</loc>
-         <lastmod>2025-04-23</lastmod>
+         <lastmod>2025-04-30</lastmod>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/latest/installation/</loc>
-         <lastmod>2025-04-23</lastmod>
+         <lastmod>2025-04-30</lastmod>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/latest/api/</loc>
-         <lastmod>2025-04-23</lastmod>
+         <lastmod>2025-04-30</lastmod>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/latest/api/SUMMARY/</loc>
-         <lastmod>2025-04-23</lastmod>
+         <lastmod>2025-04-30</lastmod>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/latest/api/connectors/</loc>
-         <lastmod>2025-04-23</lastmod>
+         <lastmod>2025-04-30</lastmod>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/latest/api/connectors/daos/</loc>
-         <lastmod>2025-04-23</lastmod>
+         <lastmod>2025-04-30</lastmod>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/latest/api/connectors/dim/</loc>
-         <lastmod>2025-04-23</lastmod>
+         <lastmod>2025-04-30</lastmod>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/latest/api/connectors/dim/exceptions/</loc>
-         <lastmod>2025-04-23</lastmod>
+         <lastmod>2025-04-30</lastmod>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/latest/api/connectors/dim/margo/</loc>
-         <lastmod>2025-04-23</lastmod>
+         <lastmod>2025-04-30</lastmod>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/latest/api/connectors/dim/models/</loc>
-         <lastmod>2025-04-23</lastmod>
+         <lastmod>2025-04-30</lastmod>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/latest/api/connectors/dim/ucx/</loc>
-         <lastmod>2025-04-23</lastmod>
+         <lastmod>2025-04-30</lastmod>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/latest/api/connectors/dim/utils/</loc>
-         <lastmod>2025-04-23</lastmod>
+         <lastmod>2025-04-30</lastmod>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/latest/api/connectors/dim/zmq/</loc>
-         <lastmod>2025-04-23</lastmod>
+         <lastmod>2025-04-30</lastmod>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/latest/api/plugins/</loc>
-         <lastmod>2025-04-23</lastmod>
+         <lastmod>2025-04-30</lastmod>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/latest/api/plugins/distributed/</loc>
-         <lastmod>2025-04-23</lastmod>
+         <lastmod>2025-04-30</lastmod>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/latest/contributing/</loc>
-         <lastmod>2025-04-23</lastmod>
+         <lastmod>2025-04-30</lastmod>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/latest/contributing/issues-pull-requests/</loc>
-         <lastmod>2025-04-23</lastmod>
+         <lastmod>2025-04-30</lastmod>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/latest/contributing/releases/</loc>
-         <lastmod>2025-04-23</lastmod>
+         <lastmod>2025-04-30</lastmod>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/latest/contributing/style-guide/</loc>
-         <lastmod>2025-04-23</lastmod>
+         <lastmod>2025-04-30</lastmod>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/latest/guides/</loc>
-         <lastmod>2025-04-23</lastmod>
+         <lastmod>2025-04-30</lastmod>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/latest/guides/daos/</loc>
-         <lastmod>2025-04-23</lastmod>
+         <lastmod>2025-04-30</lastmod>
     </url>
     <url>
          <loc>https://extensions.proxystore.dev/latest/guides/dask-distributed/</loc>
-         <lastmod>2025-04-23</lastmod>
+         <lastmod>2025-04-30</lastmod>
     </url>
 </urlset>
