@@ -21,7 +21,7 @@ def test_warn_unregistered_store() -> None:
     with Store('test_warn_unregistered_store', LocalConnector()) as store:
         with pytest.warns(UserWarning, match='Call register_store()'):
             client = Client(ps_store=store, ps_threshold=0)
-            client.close()
+        client.close()
 
 
 def test_client_default_behavior() -> None:
@@ -115,7 +115,10 @@ def test_client_map_proxy_kwarg_warning(tmp_path: pathlib.Path) -> None:
             processes=False,
         )
 
-        with pytest.warns(UserWarning):
+        with pytest.warns(
+            UserWarning,
+            match=r'A keyword argument to map\(\) was proxied',
+        ):
             futures = client.map(_pow, [1, 2, 3], p=2)
 
         results = [f.result() for f in futures]

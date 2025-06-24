@@ -135,6 +135,9 @@ class DDict(_DObj):
         else:
             return self.dump() == other.dump()
 
+    def __hash__(self) -> int:
+        raise NotImplementedError
+
     def __ne__(self, other: Any) -> bool:
         return not self.__eq__(other)
 
