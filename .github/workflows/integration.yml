@@ -25,7 +25,7 @@ jobs:
     steps:
       - name: Checkout v2
         # Required to mount the Github Workspace to a volume
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Pull image and run tests
         uses: addnab/docker-run-action@v3
