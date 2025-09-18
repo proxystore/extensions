@@ -25,6 +25,7 @@ try:
 except ImportError as e:  # pragma: no cover
     ucx_import_error = e
 
+from proxystore.serialize import BytesLike
 from proxystore.serialize import deserialize
 from proxystore.serialize import serialize
 
@@ -234,7 +235,7 @@ class UCXConnector:
         assert response.exists is not None
         return response.exists
 
-    def get(self, key: DIMKey) -> bytes | None:
+    def get(self, key: DIMKey) -> BytesLike | None:
         """Get the serialized object associated with the key.
 
         Args:
@@ -247,7 +248,7 @@ class UCXConnector:
         (result,) = self._send_rpcs([rpc])
         return result.data
 
-    def get_batch(self, keys: Sequence[DIMKey]) -> list[bytes | None]:
+    def get_batch(self, keys: Sequence[DIMKey]) -> list[BytesLike | None]:
         """Get a batch of serialized objects associated with the keys.
 
         Args:
@@ -261,7 +262,7 @@ class UCXConnector:
         responses = self._send_rpcs(rpcs)
         return [r.data for r in responses]
 
-    def put(self, obj: bytes) -> DIMKey:
+    def put(self, obj: BytesLike) -> DIMKey:
         """Put a serialized object in the store.
 
         Args:
@@ -281,7 +282,7 @@ class UCXConnector:
         self._send_rpcs([rpc])
         return key
 
-    def put_batch(self, objs: Sequence[bytes]) -> list[DIMKey]:
+    def put_batch(self, objs: Sequence[BytesLike]) -> list[DIMKey]:
         """Put a batch of serialized objects in the store.
 
         Args:
@@ -313,7 +314,7 @@ class UCXServer:
     """UCXServer implementation."""
 
     def __init__(self) -> None:
-        self.data: dict[str, bytes] = {}
+        self.data: dict[str, BytesLike] = {}
 
     def evict(self, key: str) -> None:
         """Evict the object associated with the key.
@@ -334,7 +335,7 @@ class UCXServer:
         """
         return key in self.data
 
-    def get(self, key: str) -> bytes | None:
+    def get(self, key: str) -> BytesLike | None:
         """Get the serialized object associated with the key.
 
         Args:
@@ -345,7 +346,7 @@ class UCXServer:
         """
         return self.data.get(key, None)
 
-    def put(self, key: str, data: bytes) -> None:
+    def put(self, key: str, data: BytesLike) -> None:
         """Put data in the store.
 
         Args:
