@@ -14,6 +14,8 @@ if sys.version_info >= (3, 11):  # pragma: >=3.11 cover
 else:  # pragma: <3.11 cover
     from typing_extensions import Self
 
+from proxystore.serialize import BytesLike
+
 try:
     import pydaos
 except ImportError as e:  # pragma: no cover
@@ -194,7 +196,7 @@ class DAOSConnector:
         self._validate_key(key)
         return key.dict_key in self._dict
 
-    def get(self, key: DAOSKey) -> bytes | None:
+    def get(self, key: DAOSKey) -> BytesLike | None:
         """Get the serialized object associated with the key.
 
         Args:
@@ -209,7 +211,7 @@ class DAOSConnector:
         except KeyError:
             return None
 
-    def get_batch(self, keys: Sequence[DAOSKey]) -> list[bytes | None]:
+    def get_batch(self, keys: Sequence[DAOSKey]) -> list[BytesLike | None]:
         """Get a batch of serialized objects associated with the keys.
 
         Args:
@@ -222,7 +224,7 @@ class DAOSConnector:
         # Note: using DDict.bget() would be more efficient, but it will
         # error if any key is missing. So to maintain the semantics of
         # this method, we have to try each key individually.
-        objs: list[bytes | None] = []
+        objs: list[BytesLike | None] = []
         for key in keys:
             self._validate_key(key)
             objs.append(self.get(key))
@@ -247,7 +249,7 @@ class DAOSConnector:
             dict_key=str(uuid.uuid4()),
         )
 
-    def put(self, obj: bytes) -> DAOSKey:
+    def put(self, obj: BytesLike) -> DAOSKey:
         """Put a serialized object in the store.
 
         Args:
@@ -265,7 +267,7 @@ class DAOSConnector:
         self._dict.put(key.dict_key, obj)
         return key
 
-    def put_batch(self, objs: Sequence[bytes]) -> list[DAOSKey]:
+    def put_batch(self, objs: Sequence[BytesLike]) -> list[DAOSKey]:
         """Put a batch of serialized objects in the store.
 
         Args:

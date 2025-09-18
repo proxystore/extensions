@@ -31,6 +31,7 @@ try:
 except ImportError as e:  # pragma: no cover
     pymargo_import_error = e
 
+from proxystore.serialize import BytesLike
 from proxystore.serialize import deserialize
 from proxystore.serialize import serialize
 
@@ -290,7 +291,7 @@ class MargoConnector:
         assert response.exists is not None
         return response.exists
 
-    def get(self, key: DIMKey) -> bytes | None:
+    def get(self, key: DIMKey) -> BytesLike | None:
         """Get the serialized object associated with the key.
 
         Args:
@@ -310,7 +311,7 @@ class MargoConnector:
 
         return None
 
-    def get_batch(self, keys: Sequence[DIMKey]) -> list[bytes | None]:
+    def get_batch(self, keys: Sequence[DIMKey]) -> list[BytesLike | None]:
         """Get a batch of serialized objects associated with the keys.
 
         Args:
@@ -336,7 +337,7 @@ class MargoConnector:
             for i, b in enumerate(buffers)
         ]
 
-    def put(self, obj: bytes) -> DIMKey:
+    def put(self, obj: BytesLike) -> DIMKey:
         """Put a serialized object in the store.
 
         Args:
@@ -358,7 +359,7 @@ class MargoConnector:
         self._send_rpcs([rpc])
         return key
 
-    def put_batch(self, objs: Sequence[bytes]) -> list[DIMKey]:
+    def put_batch(self, objs: Sequence[BytesLike]) -> list[DIMKey]:
         """Put a batch of serialized objects in the store.
 
         Args:

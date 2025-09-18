@@ -6,6 +6,8 @@ from dataclasses import dataclass
 from typing import Literal
 from typing import NamedTuple
 
+from proxystore.serialize import BytesLike
+
 
 class DIMKey(NamedTuple):
     """Key to objects stored across `UCXConnector`s.
@@ -38,7 +40,7 @@ class RPC:
 
     operation: Literal['exists', 'evict', 'get', 'put']
     key: DIMKey
-    data: bytes | None = None
+    data: BytesLike | None = None
 
 
 @dataclass
@@ -56,6 +58,6 @@ class RPCResponse:
 
     operation: Literal['exists', 'evict', 'get', 'put']
     key: DIMKey
-    data: bytes | None = None
+    data: BytesLike | None = None
     exists: bool | None = None
     exception: Exception | None = None
