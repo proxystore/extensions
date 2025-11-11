@@ -304,7 +304,7 @@ class UCXConnector:
         ]
         rpcs = [
             RPC(operation='put', key=key, data=obj)
-            for key, obj in zip(keys, objs)
+            for key, obj in zip(keys, objs, strict=False)
         ]
         self._send_rpcs(rpcs)
         return keys

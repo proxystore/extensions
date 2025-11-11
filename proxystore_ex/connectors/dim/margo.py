@@ -381,7 +381,7 @@ class MargoConnector:
         ]
         rpcs: list[RPC] = []
 
-        for key, obj in zip(keys, objs):
+        for key, obj in zip(keys, objs, strict=False):
             blk = self.engine.create_bulk(obj, bulk.read_only)
             rpcs.append(RPC(operation='put', key=key, data=blk))
 

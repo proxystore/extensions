@@ -3,10 +3,10 @@ from __future__ import annotations
 import contextlib
 import importlib.util
 import platform
+from collections.abc import Callable
 from collections.abc import Generator
 from contextlib import AbstractContextManager
 from typing import Any
-from typing import Callable
 from unittest import mock
 
 import pytest

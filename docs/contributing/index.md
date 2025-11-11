@@ -8,7 +8,7 @@ and ProxyStore installed in editable mode with the necessary extras options.
 ```bash
 $ git clone https://github.com/proxystore/extensions
 $ cd extensions
-$ tox --devenv venv -e py311
+$ tox --devenv venv -e py314
 $ . venv/bin/activate
 ```
 
@@ -16,8 +16,8 @@ $ . venv/bin/activate
 
     Running Tox in a Conda environment is possible but it may conflict with
     Tox's ability to find the correct Python versions. E.g., if your
-    Conda environment is Python 3.9, running `#!bash $ tox -e p38` may still use
-    Python 3.9.
+    Conda environment is Python 3.14, running `#!bash $ tox -e p313` may still use
+    Python 3.14.
 
 To install manually:
 ```bash
@@ -61,9 +61,9 @@ Code that is useful for building tests but is not a test itself belongs in the
 
 ```bash
 # Run all tests in tests/
-$ tox -e py311
+$ tox -e py314
 # Run a specific test
-$ tox -e py311 -- tests/x/y_test.py::test_z
+$ tox -e py314 -- tests/x/y_test.py::test_z
 ```
 
 ### Tests (docker)
@@ -81,7 +81,7 @@ $ docker pull ghcr.io/proxystore/proxystore-dim:nightly
 # Be sure to change the path to your proxystore repo directory
 $ docker run --rm -it --network host -v /path/to/proxystore:/proxystore ghcr.io/proxystore/proxystore-dim:nightly
 # Inside container
-$ tox -e py311-dim
+$ tox -e py314-dim
 ```
 
 ## Docs
