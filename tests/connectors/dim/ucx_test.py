@@ -59,17 +59,17 @@ def test_connector_raises_rpc_error() -> None:
             return serialize(r)
 
     with (
-        mock.patch(
-            'proxystore_ex.connectors.dim.ucx.wait_for_server',
-        ),
+        mock.patch('proxystore_ex.connectors.dim.ucx.wait_for_server'),
         mock.patch(
             'ucp.create_endpoint',
             AsyncMock(return_value=MockEndpoint()),
         ),
     ):
-        with UCXConnector(port=0) as connector:
-            with pytest.raises(Exception, match='test'):
-                connector._send_rpcs([RPC('get', TEST_KEY)])
+        with (
+            UCXConnector(port=0) as connector,
+            pytest.raises(Exception, match='test'),
+        ):
+            connector._send_rpcs([RPC('get', TEST_KEY)])
 
 
 def test_connector_close_kills_server() -> None:

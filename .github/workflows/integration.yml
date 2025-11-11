@@ -14,7 +14,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - toxenv: py39-dim
           - toxenv: py310-dim
           - toxenv: py311-dim
           - toxenv: py312-dim

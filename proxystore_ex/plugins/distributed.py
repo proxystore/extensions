@@ -4,22 +4,18 @@ from __future__ import annotations
 
 import functools
 import logging
-import sys
 import warnings
+from collections.abc import Callable
 from collections.abc import Iterable
 from collections.abc import Mapping
 from functools import partial
 from typing import Any
-from typing import Callable
 from typing import cast
+from typing import ParamSpec
 from typing import TypeVar
 
-if sys.version_info >= (3, 10):  # pragma: >3.10 cover
-    from typing import ParamSpec
-else:  # pragma: <3.10 cover
-    from typing_extensions import ParamSpec
-
 try:
+    from dask._task_spec import DataNode
     from dask.base import tokenize
     from dask.utils import funcname
     from distributed import Client as DaskDistributedClient
@@ -40,17 +36,6 @@ from proxystore.store.types import ConnectorKeyT
 from proxystore.store.utils import get_key
 from proxystore.warnings import ExperimentalWarning
 
-try:  # pragma: >3.9 cover
-    from dask._task_spec import DataNode
-
-    class _ProxyNode(DataNode):
-        key: ConnectorKeyT
-        value: Proxy[Any]
-
-    USE_TASK_SPEC = True
-except ImportError:  # pragma: <=3.9 cover
-    USE_TASK_SPEC = False
-
 warnings.warn(
     'Dask plugins are an experimental feature and may exhibit unexpected '
     'behaviour or change in the future.',
@@ -63,6 +48,11 @@ P = ParamSpec('P')
 ConnectorT = TypeVar('ConnectorT', bound=Connector[Any])
 
 logger = logging.getLogger(__name__)
+
+
+class _ProxyNode(DataNode):
+    key: ConnectorKeyT
+    value: Proxy[Any]
 
 
 class Client(DaskDistributedClient):
@@ -211,11 +201,11 @@ class Client(DaskDistributedClient):
             # and instead want to wait to proxy until the later calls to map()
             # on each batch.
             key = key or funcname(func)
-            iterables = list(zip(*zip(*iterables)))  # type: ignore[assignment]
+            iterables = list(zip(*zip(*iterables, strict=False), strict=False))  # type: ignore[assignment]
             if not isinstance(key, list) and pure:  # pragma: no branch
                 key = [
                     f'{key}-{tokenize(func, kwargs, *args)}-proxy'
-                    for args in zip(*iterables)
+                    for args in zip(*iterables, strict=False)
                 ]
 
             iterables = tuple(
@@ -265,7 +255,7 @@ class Client(DaskDistributedClient):
             not (batch_size and batch_size > 1 and total_length > batch_size)
             and self._ps_store is not None
         ):
-            for future, *args in zip(futures, *iterables):
+            for future, *args in zip(futures, *iterables, strict=False):
                 # TODO: how to delete kwargs?
                 callback = partial(
                     _evict_proxies_callback,
@@ -394,17 +384,11 @@ def _evict_proxies_callback(
 
 
 def _get_keys(iterable: Iterable[Any]) -> tuple[ConnectorKeyT, ...]:
-    if USE_TASK_SPEC:  # pragma: >3.9 cover
-        return tuple(x.key for x in iterable if isinstance(x, _ProxyNode))
-    else:  # pragma: <=3.9 cover
-        return tuple(x for x in iterable if isinstance(x, Proxy))
+    return tuple(x.key for x in iterable if isinstance(x, _ProxyNode))
 
 
 def _is_proxy(obj: Any) -> bool:
-    if USE_TASK_SPEC:  # pragma: >3.9 cover
-        return isinstance(obj, (_ProxyNode, Proxy))
-    else:  # pragma: <=3.9 cover
-        return isinstance(obj, Proxy)
+    return isinstance(obj, _ProxyNode | Proxy)
 
 
 def _proxy_by_size(
@@ -495,13 +479,10 @@ def _proxy_iterable(
         for value in iterable
     )
 
-    if USE_TASK_SPEC:  # pragma: >3.9 cover
-        return tuple(
-            _ProxyNode(get_key(obj), obj) if isinstance(obj, Proxy) else obj
-            for obj in objects
-        )
-    else:  # pragma: <=3.9 cover
-        return objects
+    return tuple(
+        _ProxyNode(get_key(obj), obj) if isinstance(obj, Proxy) else obj
+        for obj in objects
+    )
 
 
 def _proxy_mapping(
@@ -533,15 +514,10 @@ def _proxy_mapping(
         for key in mapping
     }
 
-    if USE_TASK_SPEC:  # pragma: >3.9 cover
-        return {
-            key: _ProxyNode(get_key(obj), obj)
-            if isinstance(obj, Proxy)
-            else obj
-            for key, obj in objects.items()
-        }
-    else:  # pragma: <=3.9 cover
-        return objects
+    return {
+        key: _ProxyNode(get_key(obj), obj) if isinstance(obj, Proxy) else obj
+        for key, obj in objects.items()
+    }
 
 
 def _proxy_task_wrapper(

@@ -230,7 +230,7 @@ class DAOSConnector:
             objs.append(self.get(key))
         return objs
 
-    def new_key(self, obj: bytes | None = None) -> DAOSKey:
+    def new_key(self, obj: BytesLike | None = None) -> DAOSKey:
         """Create a new key.
 
         Args:
@@ -286,10 +286,12 @@ class DAOSConnector:
             )
             for _ in objs
         ]
-        self._dict.bput({key.dict_key: obj for key, obj in zip(keys, objs)})
+        self._dict.bput(
+            {key.dict_key: obj for key, obj in zip(keys, objs, strict=False)},
+        )
         return keys
 
-    def set(self, key: DAOSKey, obj: bytes) -> None:
+    def set(self, key: DAOSKey, obj: BytesLike) -> None:
         """Set the object associated with a key.
 
         Note:

@@ -15,20 +15,16 @@ maintainers = [
 ]
 description = "ProxyStore extensions."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 license = {text = "MIT"}
 classifiers = [
     "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: Implementation :: CPython",
 ]
 dependencies = [
-    "proxystore>=0.6.5",
+    "proxystore>=0.8.3",
     "pyzmq",
 ]
 
@@ -86,7 +82,7 @@ omit = [
 parallel = true
 
 [tool.mypy]
-python_version = "3.12"
+python_version = "3.14"
 plugins = [ "proxystore.mypy_plugin" ]
 check_untyped_defs = true
 disallow_any_generics = true
@@ -112,7 +108,7 @@ timeout = 30
 
 [tool.ruff]
 line-length = 79
-target-version = "py39"
+target-version = "py310"
 
 [tool.ruff.format]
 indent-style = "space"
