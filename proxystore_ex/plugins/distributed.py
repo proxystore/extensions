@@ -6,6 +6,7 @@ import functools
 import logging
 import warnings
 from collections.abc import Callable
+from collections.abc import Collection
 from collections.abc import Iterable
 from collections.abc import Mapping
 from functools import partial
@@ -148,25 +149,25 @@ class Client(DaskDistributedClient):
         self._ps_store = ps_store
         self._ps_threshold = ps_threshold
 
-    def map(  # type: ignore[no-untyped-def]
+    def map(
         self,
-        func,
-        *iterables,
-        key=None,
-        workers=None,
-        retries=None,
-        resources=None,
-        priority=0,
-        allow_other_workers=False,
-        fifo_timeout='100 ms',
-        actor=False,
-        actors=False,
-        pure=True,
-        batch_size=None,
+        func: Callable[..., T],
+        *iterables: Collection,  # type: ignore[type-arg]
+        key: str | list[str] | None = None,
+        workers: str | Iterable[str] | None = None,
+        retries: int | None = None,
+        resources: dict[str, Any] | None = None,
+        priority: int = 0,
+        allow_other_workers: bool = False,
+        fifo_timeout: str = '100 ms',
+        actor: bool = False,
+        actors: bool = False,
+        pure: bool = True,
+        batch_size: int | None = None,
         proxy_args: bool = True,
         proxy_result: bool = True,
-        **kwargs,
-    ):
+        **kwargs: Any,
+    ) -> list[DaskDistributedFuture[T]]:
         """Map a function on a sequence of arguments.
 
         This has the same behavior as [`Client.map()`][distributed.Client.map]
@@ -276,22 +277,23 @@ class Client(DaskDistributedClient):
 
     def submit(  # type: ignore[no-untyped-def]
         self,
-        func,
+        func: Callable[..., T],
         *args,
-        key=None,
-        workers=None,
-        resources=None,
-        retries=None,
-        priority=0,
-        fifo_timeout='100 ms',
-        allow_other_workers=False,
-        actor=False,
-        actors=False,
-        pure=True,
+        key: str | None = None,
+        workers: str | Iterable[str] | None = None,
+        retries: int | None = None,
+        resources: dict[str, Any] | None = None,
+        priority: int = 0,
+        allow_other_workers: bool = False,
+        fifo_timeout: str = '100 ms',
+        actor: bool = False,
+        actors: bool = False,
+        pure: bool = True,
+        batch_size: int | None = None,
         proxy_args: bool = True,
         proxy_result: bool = True,
-        **kwargs,
-    ):
+        **kwargs: Any,
+    ) -> DaskDistributedFuture[T]:
         """Submit a function application to the scheduler.
 
         This has the same behavior as
@@ -375,7 +377,7 @@ class Client(DaskDistributedClient):
 
 
 def _evict_proxies_callback(
-    _future: DaskDistributedFuture,
+    _future: DaskDistributedFuture[Any],
     keys: Iterable[ConnectorKeyT],
     store: Store[Any],
 ) -> None:
