@@ -26,7 +26,7 @@ except ImportError:
 
     sys.modules['ucp'] = ucp
 
-import proxystore
+import proxystore.store
 import pytest
 
 from testing.connectors import connectors
