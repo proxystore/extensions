@@ -79,7 +79,7 @@ class MockEndpoint:
         if response.operation == 'exists':
             response.exists = response.key.obj_id in data
         elif response.operation == 'get':
-            response.data = data.get(response.key.obj_id, None)
+            response.data = data.get(response.key.obj_id)
 
         return serialize(response)
 
