@@ -21,17 +21,15 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    container:
+      image: ghcr.io/proxystore/proxystore-dim:nightly
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
     steps:
-      - name: Checkout v2
-        # Required to mount the Github Workspace to a volume
+      - name: Checkout repository
         uses: actions/checkout@v6
 
       - name: Pull image and run tests
-        uses: addnab/docker-run-action@v3
-        with:
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          registry: ghcr.io
-          image: ghcr.io/proxystore/proxystore-dim:nightly
-          options: -v ${{ github.workspace }}:/proxystore-ex --network host --workdir /proxystore-ex
-          run: tox -e ${{ matrix.toxenv }}
+        run: tox -e ${{ matrix.toxenv }}
