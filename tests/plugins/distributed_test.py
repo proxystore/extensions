@@ -174,6 +174,7 @@ def test_proxy_by_size() -> None:
         # The target is already set by default
         del x.__proxy_target__
         assert x == test_obj
+        assert isinstance(x, Proxy)
         assert not store.exists(get_key(x))
 
 
@@ -238,6 +239,7 @@ def test_proxy_task_wrapper() -> None:
         # The target is already set by default
         del result.__proxy_target__
         assert result == '1bbbbbbbbbb2dddddddddd'
+        assert isinstance(result, Proxy)
         assert not store.exists(get_key(result))
 
 
