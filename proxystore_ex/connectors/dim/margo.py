@@ -394,7 +394,7 @@ class MargoServer:
     """MargoServer implementation."""
 
     def __init__(self, engine: Engine) -> None:
-        self.data: dict[str, bytes] = {}
+        self.data: dict[str, BytesLike] = {}
         self.engine = engine
 
     def evict(

@@ -14,7 +14,7 @@ client = 'client'
 server = 'server'
 
 # server dictionary
-data_dict: dict[str, bytes] = {}
+data_dict: dict[str, bytes | bytearray] = {}
 
 
 class MargoException(Exception):  # pragma: no cover  # noqa: N818
